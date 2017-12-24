@@ -1,5 +1,6 @@
 import React from 'react';
-import { JustifyContentCenter } from "./reusable/DivReusables";
+import { JustifyContentCenter, FormRowCol } from "./reusable/DivReusables";
+import { BtnSubmit } from "./reusable/Buttons";
 
 const Registration = () => {
     return(
@@ -16,18 +17,18 @@ const Registration = () => {
                                className="form-control border-0" placeholder="Last name" required />
                     </div>
                 </div>
-                <div className="form-row">
-                    <div className="form-group col">
-                        <input type="text" name="email"
-                               className="form-control border-0" placeholder="Email" required />
-                    </div>
-                </div>
-                <div className="form-row">
-                    <div className="form-group col">
-                        <input type="password" name="password"
-                               className="form-control border-0" placeholder="New password" required />
-                    </div>
-                </div>
+
+                <FormRowCol>
+                    <input type="text" name="email"
+                           className="form-control border-0" placeholder="Email" required />
+                </FormRowCol>
+
+                <FormRowCol>
+                    <input type="password" name="password"
+                           className="form-control border-0" placeholder="New password" required />
+                </FormRowCol>
+
+                <BtnSubmit title='Register' classes='btn-primary' />
             </form>
         </JustifyContentCenter>
     )

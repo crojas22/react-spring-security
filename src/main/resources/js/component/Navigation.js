@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import LogInForm from "./navbar/LogInForm";
+import { BtnInput } from "./reusable/Buttons";
 
 class Navigation extends Component {
 
@@ -31,9 +32,7 @@ class Navigation extends Component {
                     </ul>
                     {
                         this.state.showLogInForm ? <LogInForm /> :
-                            <button onClick={this.toggleShowLogInForm} type="button" className="btn btn-primary btn-sm rounded-0">
-                                Log In
-                            </button>
+                            <BtnInput onClick={ this.toggleShowLogInForm } title="Log in" classes="btn-primary btn-sm"/>
                     }
                 </div>
             </nav>

@@ -11,3 +11,13 @@ export const JustifyContentCenter = props => (
         </div>
     </div>
 );
+
+export const FormRowCol = props => (
+    <div className="form-row">
+        <div className="form-group col">
+            {
+                props.children
+            }
+        </div>
+    </div>
+);
