@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import Navigation from "./navbar/Navigation";
+import Navigation from "./Navigation";
+import { Route, Switch } from 'react-router-dom';
+import Home from "./Home";
+import Registration from "./Registration";
 
 class App extends Component {
 
@@ -8,7 +11,10 @@ class App extends Component {
         return(
             <div>
                 <Navigation />
-                hi
+                <Switch>
+                    <Route exact path='/' render={() => (<Home />)}/>
+                    <Route exact path='/register' render={() => (<Registration />)}/>
+                </Switch>
             </div>
         )
     }

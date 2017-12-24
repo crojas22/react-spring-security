@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import LogInForm from "./LogInForm";
+import { NavLink } from 'react-router-dom';
+import LogInForm from "./navbar/LogInForm";
 
 class Navigation extends Component {
 
@@ -15,14 +16,14 @@ class Navigation extends Component {
     render() {
         return(
             <nav className="navbar navbar-expand-md navbar-light bg-light">
-                <a className="navbar-brand" href="#">Home</a>
+                <NavLink className="navbar-brand" exact to="/">Home</NavLink>
                 <button className="navbar-toggler border-0" type="button" onClick={ this.toggleShowNavBar }>
                     <span className="navbar-toggler-icon"/>
                 </button>
                 <div className={"collapse navbar-collapse " + (this.state.showNavBar ? "show" : "")}>
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Features</a>
+                            <NavLink className="nav-link" exact to="/register">Register</NavLink>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#">Pricing</a>
