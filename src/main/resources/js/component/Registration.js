@@ -1,30 +1,47 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { JustifyContentCenter, FormRowCol } from "./reusable/DivReusables";
 import { BtnSubmit } from "./reusable/Buttons";
+import { registerAction } from "../actions";
 
-const Registration = () => {
+const Registration = ({registerAction}) => {
+
+    let _firstName, _lastName, _email, _password;
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        registerAction({
+            firstName: _firstName.value,
+            lastName: _lastName.value,
+            userName: _email,
+            password: _password
+        });
+        _firstName.value = "", _lastName.value = "", _email.value = "", _password.value = "";
+    };
+
     return(
         <JustifyContentCenter>
-            <form className="registration">
+            <form className="registration" onSubmit={handleSubmit}>
                 <h4>Register</h4>
                 <div className="form-row">
                     <div className="form-group col-md-6">
-                        <input type="text" id="firstName"
+                        <input type="text" id="firstName" ref={input => _firstName = input}
                                className="form-control border-0" placeholder="First name" required />
                     </div>
                     <div className="form-group col-md-6">
-                        <input type="text" name="lastName"
+                        <input type="text" name="lastName" ref={input => _lastName = input}
                                className="form-control border-0" placeholder="Last name" required />
                     </div>
                 </div>
 
                 <FormRowCol>
-                    <input type="text" name="email"
+                    <input type="text" name="email" ref={input => _email = input}
                            className="form-control border-0" placeholder="Email" required />
                 </FormRowCol>
 
                 <FormRowCol>
-                    <input type="password" name="password"
+                    <input type="password" name="password" ref={input => _password = input}
                            className="form-control border-0" placeholder="New password" required />
                 </FormRowCol>
 
@@ -34,4 +51,10 @@ const Registration = () => {
     )
 };
 
-export default Registration;
+const  mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        registerAction
+    }, dispatch)
+};
+
+export default connect(null, mapDispatchToProps)(Registration);
