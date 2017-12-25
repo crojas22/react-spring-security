@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiUrl = rest => `/api/v1/${rest}`;
+const apiUrl = rest => `/${rest}`;
 
 export const registerApi = newUser => {
     return axios({

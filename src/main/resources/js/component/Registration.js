@@ -14,8 +14,8 @@ const Registration = ({registerAction}) => {
         registerAction({
             firstName: _firstName.value,
             lastName: _lastName.value,
-            userName: _email,
-            password: _password
+            userName: _email.value,
+            password: _password.value
         });
         _firstName.value = "", _lastName.value = "", _email.value = "", _password.value = "";
     };

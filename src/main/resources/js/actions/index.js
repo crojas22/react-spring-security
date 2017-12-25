@@ -9,9 +9,11 @@ export const didRegister = bool => {
 
 export const registerAction = newUser => {
     return(dispatch) => {
-        registerApi(newUser).then(resp => {
+        registerApi(newUser)
+            .then(resp => {
             dispatch(didRegister(true));
             console.log(resp);
         })
+            .catch(error => console.log(error.response))
     }
 };
