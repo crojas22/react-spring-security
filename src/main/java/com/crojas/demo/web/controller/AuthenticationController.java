@@ -1,6 +1,5 @@
 package com.crojas.demo.web.controller;
 
-import com.crojas.demo.domain.Role;
 import com.crojas.demo.domain.User;
 import com.crojas.demo.domain.UserDto;
 import com.crojas.demo.service.UserService;

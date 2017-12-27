@@ -6,10 +6,13 @@ import com.crojas.demo.domain.UserDto;
 import com.crojas.demo.repo.RoleRepository;
 import com.crojas.demo.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService{
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -30,10 +33,20 @@ public class UserService {
             role.addUser(user);
             user.addRole(role);
         }
+        user.setEnabled(true);
         return this.userRepository.save(user);
     }
 
     public UserDto toDto(User user) {
-        return new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getUserName());
+        return new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getUsername());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = this.userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found.");
+        }
+        return user;
     }
 }
