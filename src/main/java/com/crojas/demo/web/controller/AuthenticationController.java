@@ -21,7 +21,7 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json")
     public UserDto registerUser(@Valid @RequestBody User user) {
-        this.userService.createUser(user);
+        this.userService.createUser(user, "ROLE_USER");
         return this.userService.toDto(user);
     }
 

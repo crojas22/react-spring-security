@@ -3,6 +3,7 @@ package com.crojas.demo.service;
 import com.crojas.demo.domain.Role;
 import com.crojas.demo.domain.User;
 import com.crojas.demo.domain.UserDto;
+import com.crojas.demo.exception.UsernameExistsException;
 import com.crojas.demo.repo.RoleRepository;
 import com.crojas.demo.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 
 @Service
 public class UserService implements UserDetailsService{
@@ -23,18 +26,23 @@ public class UserService implements UserDetailsService{
         this.roleRepository = roleRepository;
     }
 
-    public User createUser(User user) {
-        Role userRole = this.roleRepository.findByName("ROLE_USER");
-        if (userRole != null){
-            user.addRole(userRole);
-            userRole.addUser(user);
+    public void createUser(User user, String roleName) throws UsernameExistsException {
+        Role userRole = this.roleRepository.findByName(roleName);
+
+        if (this.userRepository.findByUsername(user.getUsername()) != null) {
+            throw new UsernameExistsException("There is an account with that email: " + user.getUsername());
         } else {
-            Role role = new Role("ROLE_USER");
-            role.addUser(user);
-            user.addRole(role);
+            if (userRole != null){
+                user.addRole(userRole);
+                userRole.addUser(user);
+            } else {
+                Role role = new Role(roleName);
+                role.addUser(user);
+                user.addRole(role);
+            }
+            user.setEnabled(true);
+            this.userRepository.save(user);
         }
-        user.setEnabled(true);
-        return this.userRepository.save(user);
     }
 
     public UserDto toDto(User user) {
