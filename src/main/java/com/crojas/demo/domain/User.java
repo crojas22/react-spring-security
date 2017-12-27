@@ -1,18 +1,20 @@
 package com.crojas.demo.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Data
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+@Getter
+@Setter
+public class User extends BaseEntity{
+
     @NotNull
     private String firstName, lastName;
     @NotNull
@@ -23,13 +25,26 @@ public class User {
     @Email
     @Column(unique = true)
     private String userName;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<Role> roles = new HashSet<>();
 
-    protected User() {}
+    protected User() {
+        super();
+    }
 
     public User(String firstName, String lastName, String password, String userName) {
+        this();
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.userName = userName;
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
     }
 }
