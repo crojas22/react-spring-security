@@ -5,8 +5,8 @@ module.exports = {
         main: ['./src/main/resources/js/index.js', './src/main/resources/sass/main.scss']
     },
     output: {
-        path: __dirname + '/src/main/resources/static',
-        filename: 'js/bundle.js'
+        path: __dirname + '/src/main/resources/static/',
+        filename: 'bundle.js'
     },
     module: {
         loaders: [
@@ -23,7 +23,7 @@ module.exports = {
     },
     plugins: [
         new ExtractTextPlugin({
-            filename: 'css/[name].bundle.css',
+            filename: '[name].bundle.css',
             allChunks: true,
         })
     ]

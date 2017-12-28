@@ -29,7 +29,7 @@ public class UserService implements UserDetailsService{
     public void createUser(User user, String roleName) throws UsernameExistsException {
         Role userRole = this.roleRepository.findByName(roleName);
 
-        if (this.userRepository.findByUsername(user.getUsername()) != null) {
+        if (this.userRepository.findByUserName(user.getUsername()) != null) {
             throw new UsernameExistsException("There is an account with that email: " + user.getUsername());
         } else {
             if (userRole != null){
@@ -51,7 +51,7 @@ public class UserService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = this.userRepository.findByUsername(username);
+        User user = this.userRepository.findByUserName(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found.");
         }
