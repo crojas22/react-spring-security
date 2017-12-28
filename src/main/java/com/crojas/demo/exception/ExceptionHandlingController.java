@@ -21,5 +21,4 @@ public class ExceptionHandlingController {
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
-
 }

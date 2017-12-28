@@ -5,4 +5,4 @@
   border-radius: 0; }
   .registration input:hover,
   .login input:hover {
-    border-bottom: 1px solid black; }
+    border-color: black !important; }

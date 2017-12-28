@@ -2,9 +2,6 @@
 .login {
   input {
     @include form-input;
-    &:hover {
-      border-bottom: 1px solid black;
-    }
   }
 }
 

@@ -26,23 +26,22 @@ public class UserService implements UserDetailsService{
         this.roleRepository = roleRepository;
     }
 
-    public void createUser(User user, String roleName) throws UsernameExistsException {
+    public void createUser(User user, String roleName) {
         Role userRole = this.roleRepository.findByName(roleName);
-
-        if (this.userRepository.findByUserName(user.getUsername()) != null) {
-            throw new UsernameExistsException("There is an account with that email: " + user.getUsername());
+        if (userRole != null){
+            user.addRole(userRole);
+            userRole.addUser(user);
         } else {
-            if (userRole != null){
-                user.addRole(userRole);
-                userRole.addUser(user);
-            } else {
-                Role role = new Role(roleName);
-                role.addUser(user);
-                user.addRole(role);
-            }
-            user.setEnabled(true);
-            this.userRepository.save(user);
+            Role role = new Role(roleName);
+            role.addUser(user);
+            user.addRole(role);
         }
+        user.setEnabled(true);
+        this.userRepository.save(user);
+    }
+
+    public boolean usernameExists(User user) {
+        return this.userRepository.findByUserName(user.getUsername()) != null;
     }
 
     public UserDto toDto(User user) {
