@@ -1,6 +1,8 @@
-.registration input {
+.registration input,
+.login input {
   border-bottom: 1px solid #e7e7e7 !important;
   padding-left: 0;
   border-radius: 0; }
-  .registration input:hover {
+  .registration input:hover,
+  .login input:hover {
     border-bottom: 1px solid black; }

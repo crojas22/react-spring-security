@@ -1,4 +1,5 @@
-.registration {
+.registration,
+.login {
   input {
     @include form-input;
     &:hover {
@@ -6,3 +7,4 @@
     }
   }
 }
+

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { JustifyContentCenter, FormRowCol } from "./reusable/DivReusables";
@@ -22,7 +23,7 @@ const Registration = ({registerAction}) => {
 
     return(
         <JustifyContentCenter>
-            <form className="registration" onSubmit={handleSubmit}>
+            <form className="registration" onSubmit={ handleSubmit }>
                 <h4>Register</h4>
                 <div className="form-row">
                     <div className="form-group col-md-6">
@@ -46,6 +47,8 @@ const Registration = ({registerAction}) => {
                 </FormRowCol>
 
                 <BtnSubmit title='Register' classes='btn-primary' />
+                <span className="mx-2 text-muted">or</span>
+                <Link to="/login">Login</Link>
             </form>
         </JustifyContentCenter>
     )
