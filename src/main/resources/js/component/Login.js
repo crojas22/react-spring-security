@@ -1,14 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { JustifyContentCenter, FormRowCol } from "./reusable/DivReusables";
 import { BtnSubmit } from "./reusable/Buttons";
+import { loginAction } from "../actions";
 
-const Login = () => {
+const Login = ({loginAction, history}) => {
     let _email, _password;
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        loginAction({
+            userName: _email.value,
+            password: _password.value
+        }, history);
+        _email.value = "", _password.value = "";
+    };
 
     return (
         <JustifyContentCenter>
-            <form className="login">
+            <form className="login" onSubmit={ handleSubmit }>
                 <h4>Login</h4>
 
                 <FormRowCol>
@@ -30,4 +42,10 @@ const Login = () => {
     )
 };
 
-export default Login;
+const  mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        loginAction
+    }, dispatch)
+};
+
+export default connect(null, mapDispatchToProps)(Login);

@@ -9,3 +9,11 @@ export const registerApi = newUser => {
         data: newUser
     })
 };
+
+export const loginApi = user => {
+    return axios({
+        url: apiUrl("login"),
+        method: "post",
+        data: user
+    })
+};

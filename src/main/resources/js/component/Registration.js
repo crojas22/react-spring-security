@@ -6,7 +6,7 @@ import { JustifyContentCenter, FormRowCol } from "./reusable/DivReusables";
 import { BtnSubmit } from "./reusable/Buttons";
 import { registerAction } from "../actions";
 
-const Registration = ({registerAction}) => {
+const Registration = ({registerAction, history}) => {
 
     let _firstName, _lastName, _email, _password;
 
@@ -15,9 +15,9 @@ const Registration = ({registerAction}) => {
         registerAction({
             firstName: _firstName.value,
             lastName: _lastName.value,
-            userName: _email.value,
-            password: _password.value
-        });
+            password: _password.value,
+            userName: _email.value
+        }, history);
         _firstName.value = "", _lastName.value = "", _email.value = "", _password.value = "";
     };
 

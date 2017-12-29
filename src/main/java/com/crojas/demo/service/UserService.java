@@ -3,16 +3,15 @@ package com.crojas.demo.service;
 import com.crojas.demo.domain.Role;
 import com.crojas.demo.domain.User;
 import com.crojas.demo.domain.UserDto;
-import com.crojas.demo.exception.UsernameExistsException;
 import com.crojas.demo.repo.RoleRepository;
 import com.crojas.demo.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 
 @Service
 public class UserService implements UserDetailsService{
@@ -36,16 +35,15 @@ public class UserService implements UserDetailsService{
             role.addUser(user);
             user.addRole(role);
         }
-        user.setEnabled(true);
         this.userRepository.save(user);
     }
 
     public boolean usernameExists(User user) {
-        return this.userRepository.findByUserName(user.getUsername()) != null;
+        return this.userRepository.findByUserName(user.getUserName()) != null;
     }
 
     public UserDto toDto(User user) {
-        return new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getUsername());
+        return new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getUserName());
     }
 
     @Override
@@ -54,6 +52,10 @@ public class UserService implements UserDetailsService{
         if (user == null) {
             throw new UsernameNotFoundException("User not found.");
         }
-        return user;
+        return new org.springframework.security.core.userdetails.User(
+                user.getUserName(),
+                user.getPassword(),
+                AuthorityUtils.createAuthorityList(String.valueOf(user.getRoles()))
+        );
     }
 }

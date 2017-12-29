@@ -11,8 +11,8 @@ const App = () => {
             <Navigation />
             <Switch>
                 <Route exact path="/" render={() => (<Home />)}/>
-                <Route exact path="/register" render={() => (<Registration />)}/>
-                <Route exact path="/login" render={() => (<Login />)}/>
+                <Route exact path="/register" render={props => (<Registration {...props}/>)}/>
+                <Route exact path="/login" render={props => (<Login {...props}/>)}/>
             </Switch>
         </div>
     )

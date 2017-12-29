@@ -1,4 +1,4 @@
-import { registerApi } from "../api";
+import {loginApi, registerApi} from "../api";
 
 export const didRegister = bool => {
     return {
@@ -7,11 +7,22 @@ export const didRegister = bool => {
     }
 };
 
-export const registerAction = newUser => {
+export const registerAction = (newUser, history) => {
     return(dispatch) => {
         registerApi(newUser).then(resp => {
+            if (resp.status === 201) {
+                dispatch(didRegister(true));
+                history.push('/login');
+            }
+        })
+            .catch(error => console.log(error.response))
+    }
+};
+
+export const loginAction = (user, history) => {
+    return(dispatch) => {
+        loginApi(user).then(resp => {
             console.log(resp);
-            dispatch(didRegister(true));
         })
             .catch(error => console.log(error.response))
     }
