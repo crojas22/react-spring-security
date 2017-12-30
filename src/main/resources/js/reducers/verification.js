@@ -6,3 +6,12 @@ export const userRegistered = (state = false, action) => {
             return state
     }
 };
+
+export const userAuthorized = (state=false, action) => {
+    switch (action.type) {
+        case "AUTHORIZED_USER":
+            return action.authorized;
+        default:
+            return state
+    }
+};

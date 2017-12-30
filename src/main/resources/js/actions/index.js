@@ -1,9 +1,19 @@
+import Cookies from 'universal-cookie';
 import {loginApi, registerApi} from "../api";
+
+const cookie = new Cookies();
 
 export const didRegister = bool => {
     return {
         type: "REGISTRATION_SUCCESS",
         registered: bool
+    }
+};
+
+export const isAuthorized = bool => {
+    return {
+        type: "AUTHORIZED_USER",
+        authorized: bool
     }
 };
 
@@ -15,15 +25,19 @@ export const registerAction = (newUser, history) => {
                 history.push('/login');
             }
         })
-            .catch(error => console.log(error.response))
+            .catch(error => alert(error.response))
     }
 };
 
 export const loginAction = (user, history) => {
     return(dispatch) => {
         loginApi(user).then(resp => {
-            console.log(resp);
+            if (resp.status === 200) {
+                cookie.set("token", resp.headers.authorization);
+                dispatch(isAuthorized(true));
+                history.push("/");
+            }
         })
-            .catch(error => console.log(error.response))
+            .catch(error => alert(error.response))
     }
 };

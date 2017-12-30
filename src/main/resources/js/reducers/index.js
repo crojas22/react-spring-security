@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import { userRegistered } from "./verification";
+import { userAuthorized, userRegistered } from "./verification";
 
 const reducer =  combineReducers({
-    userRegistered
+    userRegistered,
+    userAuthorized
 });
 
 export default reducer;

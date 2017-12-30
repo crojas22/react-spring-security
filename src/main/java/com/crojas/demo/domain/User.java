@@ -43,7 +43,6 @@ public class User extends BaseEntity {
     }
 
     public void setPassword(String password) {
-        //this.password = BCrypt.hashpw(password, BCrypt.gensalt());]
         this.password = password;
     }
 
