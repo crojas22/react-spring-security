@@ -12,8 +12,8 @@ const Login = ({loginAction, history}) => {
     const handleSubmit = e => {
         e.preventDefault();
         loginAction({
-            userName: _email.value,
-            password: _password.value
+            password: _password.value,
+            userName: _email.value
         }, history);
         _email.value = "", _password.value = "";
     };

@@ -6,26 +6,30 @@ import com.crojas.demo.domain.UserDto;
 import com.crojas.demo.repo.RoleRepository;
 import com.crojas.demo.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserService implements UserDetailsService{
+public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository,
+                       RoleRepository roleRepository,
+                       BCryptPasswordEncoder bCryptPasswordEncoder) {
+
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public void createUser(User user, String roleName) {
+    public void createUser(User user,
+                           String roleName) {
+
         Role userRole = this.roleRepository.findByName(roleName);
         if (userRole != null){
             user.addRole(userRole);
@@ -35,6 +39,7 @@ public class UserService implements UserDetailsService{
             role.addUser(user);
             user.addRole(role);
         }
+        user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
         this.userRepository.save(user);
     }
 
@@ -44,18 +49,5 @@ public class UserService implements UserDetailsService{
 
     public UserDto toDto(User user) {
         return new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getUserName());
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = this.userRepository.findByUserName(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found.");
-        }
-        return new org.springframework.security.core.userdetails.User(
-                user.getUserName(),
-                user.getPassword(),
-                AuthorityUtils.createAuthorityList(String.valueOf(user.getRoles()))
-        );
     }
 }

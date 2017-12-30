@@ -29,6 +29,7 @@ public class AuthenticationController {
             message.put("errorMessage", "Email already exists");
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
+
         this.userService.createUser(user, "ROLE_USER");
 
         return new ResponseEntity<>(HttpStatus.CREATED);
