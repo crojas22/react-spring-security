@@ -17,3 +17,11 @@ export const loginApi = user => {
         data: user
     })
 };
+
+export const verificationTestApi = token => {
+    return axios({
+        url: "/verification",
+        method: "get",
+        headers: { Authorization: `Bearer ${token}` }
+    })
+};

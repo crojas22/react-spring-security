@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +34,12 @@ public class AuthenticationController {
         this.userService.createUser(user, "ROLE_USER");
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/verification")
+    public ResponseEntity<Map<String,Object>> verifyToken(HttpServletRequest request) {
+        System.out.println(request.getHeaderNames());
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 }

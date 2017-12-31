@@ -1,5 +1,5 @@
 import Cookies from 'universal-cookie';
-import {loginApi, registerApi} from "../api";
+import {loginApi, registerApi, verificationTestApi} from "../api";
 
 const cookie = new Cookies();
 
@@ -39,5 +39,17 @@ export const loginAction = (user, history) => {
             }
         })
             .catch(error => alert(error.response))
+    }
+};
+
+export const verificationTest = () => {
+    return(dispatch) => {
+        const cookie = new Cookies();
+        const token = cookie.get('token');
+        console.log(token)
+        token ? verificationTestApi(token).then(resp => {
+            console.log(resp);
+            console.log(token);
+        }) : console.log(token)
     }
 };
