@@ -12,7 +12,7 @@ const App = () => {
             <Switch>
                 <Route exact path="/" render={props => (<Home {...props}/>)}/>
                 <Route exact path="/register" render={props => (<Registration history={props.history}/>)}/>
-                <Route exact path="/login" render={() => (<Login />)}/>
+                <Route exact path="/login" render={props => (<Login history={props.history}/>)}/>
             </Switch>
         </div>
     )

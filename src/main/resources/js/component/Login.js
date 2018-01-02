@@ -6,7 +6,7 @@ import { JustifyContentCenter, FormRowCol } from "./reusable/DivReusables";
 import { BtnSubmit } from "./reusable/Buttons";
 import { loginAction } from "../actions";
 
-const Login = ({loginAction}) => {
+const Login = ({loginAction, history}) => {
     let _email, _password;
 
     const handleSubmit = e => {
@@ -14,7 +14,7 @@ const Login = ({loginAction}) => {
         loginAction({
             password: _password.value,
             userName: _email.value
-        });
+        }, history);
         _email.value = "", _password.value = "";
     };
 

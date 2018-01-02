@@ -42,13 +42,13 @@ export const registerAction = (newUser, history) => {
     }
 };
 
-export const loginAction = user => {
+export const loginAction = (user, history) => {
     return(dispatch) => {
         loginApi(user).then(resp => {
             if (resp.status === 200) {
                 cookie.set("token", resp.headers.authorization);
                 dispatch(isAuthorized(true));
-                window.location.href = `${window.location.origin}`;
+                history.push("/");
             }
         })
             .catch(error => console.log(error.response))
