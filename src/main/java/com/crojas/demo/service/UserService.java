@@ -5,6 +5,7 @@ import com.crojas.demo.domain.User;
 import com.crojas.demo.domain.UserDto;
 import com.crojas.demo.repo.RoleRepository;
 import com.crojas.demo.repo.UserRepository;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,11 +44,15 @@ public class UserService {
         this.userRepository.save(user);
     }
 
+    public User findByUsername(String username) {
+        return this.userRepository.findByUserName(username);
+    }
+
     public boolean usernameExists(User user) {
         return this.userRepository.findByUserName(user.getUserName()) != null;
     }
 
-    public UserDto toDto(User user) {
+    public UserDto toDto(@NonNull User user) {
         return new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getUserName());
     }
 }

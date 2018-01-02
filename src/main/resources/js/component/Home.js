@@ -5,11 +5,12 @@ import { verificationTest } from "../actions";
 
 class Home extends React.Component {
     componentDidMount() {
-        this.props.verificationTest()
+        this.props.verificationTest(this.props.history);
     }
 
     render() {
-        const authorized = this.props.auth ? <div>authorized</div> : <div>not authorized</div>;
+        const {auth , userInfo} = this.props;
+        const authorized = auth ? <div>{userInfo.firstName}</div> : <div>not authorized</div>;
 
         return(
             authorized
@@ -19,7 +20,8 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        auth: state.userAuthorized
+        auth: state.userAuthorized,
+        userInfo: state.userInfo
     }
 };
 

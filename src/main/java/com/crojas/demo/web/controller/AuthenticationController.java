@@ -1,14 +1,15 @@
 package com.crojas.demo.web.controller;
 
 import com.crojas.demo.domain.User;
+import com.crojas.demo.domain.UserDto;
 import com.crojas.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,9 +38,17 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/verification")
-    public ResponseEntity<Map<String,Object>> verifyToken(HttpServletRequest request) {
-        System.out.println(request.getHeaderNames());
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    public ResponseEntity<Map<String,Object>> getUserInfo(Principal principal) {
+        User user = this.userService.findByUsername(principal.getName());
+        Map<String, Object> message = new HashMap<>();
+
+        if (user == null) {
+            message.put("errorMessage", "Need to sign in");
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+        UserDto dto = this.userService.toDto(user);
+        message.put("user", dto);
+        return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
     }
 
 }

@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
-import { userAuthorized, userRegistered } from "./verification";
+import {userAuthorized, userInfo, userRegistered} from "./verification";
 
 const reducer =  combineReducers({
     userRegistered,
-    userAuthorized
+    userAuthorized,
+    userInfo
 });
 
 export default reducer;

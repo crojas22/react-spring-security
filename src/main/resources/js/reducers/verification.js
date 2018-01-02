@@ -15,3 +15,12 @@ export const userAuthorized = (state=false, action) => {
             return state
     }
 };
+
+export const userInfo = (state={}, action) => {
+    switch (action.type) {
+        case "USER_INFO":
+            return action.payload.user;
+        default:
+            return state
+    }
+};

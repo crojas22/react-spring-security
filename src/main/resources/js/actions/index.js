@@ -17,6 +17,19 @@ export const isAuthorized = bool => {
     }
 };
 
+export const getUserInfo = payload => {
+    return {
+        type: "USER_INFO",
+        payload
+    }
+};
+
+export const removeUserInfo = () => {
+    return {
+        type: "REMOVE_USER_INFO"
+    }
+};
+
 export const registerAction = (newUser, history) => {
     return(dispatch) => {
         registerApi(newUser).then(resp => {
@@ -25,31 +38,41 @@ export const registerAction = (newUser, history) => {
                 history.push('/login');
             }
         })
-            .catch(error => alert(error.response))
+            .catch(error => console.log(error.response))
     }
 };
 
-export const loginAction = (user, history) => {
+export const loginAction = user => {
     return(dispatch) => {
         loginApi(user).then(resp => {
             if (resp.status === 200) {
                 cookie.set("token", resp.headers.authorization);
                 dispatch(isAuthorized(true));
-                history.push("/");
+                window.location.href = `${window.location.origin}`;
             }
         })
-            .catch(error => alert(error.response))
+            .catch(error => console.log(error.response))
     }
 };
 
-export const verificationTest = () => {
+export const verificationTest = history => {
     return(dispatch) => {
         const cookie = new Cookies();
         const token = cookie.get('token');
-        console.log(token)
-        token ? verificationTestApi(token).then(resp => {
-            console.log(resp);
-            console.log(token);
-        }) : console.log(token)
+        if (token) {
+            verificationTestApi(token).then(resp => {
+                if (resp.status === 202) {
+                    dispatch(isAuthorized(true));
+                    dispatch(getUserInfo(resp.data))
+                } else {
+                    dispatch(isAuthorized(false));
+                    dispatch(removeUserInfo());
+                    history.push("/login");
+                }
+            })
+                .catch(error => console.log(error.response))
+        } else {
+            history.push("/login")
+        }
     }
 };
