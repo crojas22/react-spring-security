@@ -20,6 +20,8 @@ export const userInfo = (state={}, action) => {
     switch (action.type) {
         case "USER_INFO":
             return action.payload.user;
+        case "REMOVE_USER_INFO":
+            return {};
         default:
             return state
     }

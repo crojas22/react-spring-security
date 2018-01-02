@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import LogInForm from "./navbar/LogInForm";
 import { BtnInput } from "./reusable/Buttons";
+import {getUserInfoAction, logoutAction} from "../actions";
+import Logout from "./navbar/Logout";
 
 class Navigation extends Component {
 
@@ -10,11 +15,19 @@ class Navigation extends Component {
         showLogInForm: false
     };
 
+    componentDidMount() {
+        this.props.getUserInfoAction(this.props.history);
+    }
+
     toggleShowNavBar = () => this.setState({ showNavBar : !this.state.showNavBar });
 
     toggleShowLogInForm = () => this.setState({ showLogInForm : !this.state.showLogInForm });
 
+    logOutUser = history => this.props.logoutAction(history);
+
     render() {
+        const {history, userInfo, auth} = this.props;
+
         return(
             <nav className="navbar navbar-expand-md navbar-light bg-light">
                 <NavLink className="navbar-brand" exact to="/">Home</NavLink>
@@ -31,8 +44,9 @@ class Navigation extends Component {
                         </li>
                     </ul>
                     {
-                        this.state.showLogInForm ? <LogInForm /> :
-                            <BtnInput onClick={ this.toggleShowLogInForm } title="Log in" classes="btn-primary btn-sm"/>
+                        auth ? <Logout logOut={() => this.logOutUser(history)} userInfo={userInfo}/> :
+                            this.state.showLogInForm ? <LogInForm /> :
+                                <BtnInput onClick={ this.toggleShowLogInForm } title="Log in" classes="btn-primary btn-sm"/>
                     }
                 </div>
             </nav>
@@ -40,4 +54,18 @@ class Navigation extends Component {
     }
 }
 
-export default Navigation;
+const mapStateToProps = state => {
+    return {
+        auth: state.userAuthorized,
+        userInfo: state.userInfo
+    }
+};
+
+const  mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        getUserInfoAction,
+        logoutAction
+    }, dispatch)
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navigation));

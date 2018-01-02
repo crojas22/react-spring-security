@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { verificationTest } from "../actions";
+import { getUserInfoAction } from "../actions";
 
 class Home extends React.Component {
     componentDidMount() {
@@ -27,7 +27,7 @@ const mapStateToProps = state => {
 
 const  mapDispatchToProps = dispatch => {
     return bindActionCreators({
-        verificationTest
+        verificationTest: getUserInfoAction
     }, dispatch)
 };
 

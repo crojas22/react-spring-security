@@ -1,5 +1,5 @@
 import Cookies from 'universal-cookie';
-import {loginApi, registerApi, verificationTestApi} from "../api";
+import {loginApi, registerApi, getUserInfoApi} from "../api";
 
 const cookie = new Cookies();
 
@@ -55,12 +55,21 @@ export const loginAction = user => {
     }
 };
 
-export const verificationTest = history => {
+export const logoutAction = history => {
+    return (dispatch) => {
+        dispatch(isAuthorized(false));
+        dispatch(removeUserInfo());
+        cookie.remove('token', { path: '/' });
+        history.push('/login');
+    }
+};
+
+export const getUserInfoAction = history => {
     return(dispatch) => {
         const cookie = new Cookies();
         const token = cookie.get('token');
         if (token) {
-            verificationTestApi(token).then(resp => {
+            getUserInfoApi(token).then(resp => {
                 if (resp.status === 202) {
                     dispatch(isAuthorized(true));
                     dispatch(getUserInfo(resp.data))

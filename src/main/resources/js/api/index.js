@@ -18,7 +18,7 @@ export const loginApi = user => {
     })
 };
 
-export const verificationTestApi = token => {
+export const getUserInfoApi = token => {
     return axios({
         url: "/verification",
         method: "get",
