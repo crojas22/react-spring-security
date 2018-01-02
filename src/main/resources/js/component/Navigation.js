@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import LogInForm from "./navbar/LogInForm";
 import { BtnInput } from "./reusable/Buttons";
-import {getUserInfoAction, logoutAction} from "../actions";
+import {getUserInfoAction, loginAction, logoutAction} from "../actions";
 import Logout from "./navbar/Logout";
 
 class Navigation extends Component {
@@ -24,6 +24,8 @@ class Navigation extends Component {
     toggleShowLogInForm = () => this.setState({ showLogInForm : !this.state.showLogInForm });
 
     logOutUser = history => this.props.logoutAction(history);
+
+    logInUser = (user, history) => this.props.loginAction(user, history);
 
     render() {
         const {history, userInfo, auth} = this.props;
@@ -45,7 +47,8 @@ class Navigation extends Component {
                     </ul>
                     {
                         auth ? <Logout logOut={() => this.logOutUser(history)} userInfo={userInfo}/> :
-                            this.state.showLogInForm ? <LogInForm /> :
+                            this.state.showLogInForm ?
+                                <LogInForm logInUser={this.logInUser} history={history} toggleShowLogInForm={this.toggleShowLogInForm}/> :
                                 <BtnInput onClick={ this.toggleShowLogInForm } title="Log in" classes="btn-primary btn-sm"/>
                     }
                 </div>
@@ -64,7 +67,8 @@ const mapStateToProps = state => {
 const  mapDispatchToProps = dispatch => {
     return bindActionCreators({
         getUserInfoAction,
-        logoutAction
+        logoutAction,
+        loginAction
     }, dispatch)
 };
 
