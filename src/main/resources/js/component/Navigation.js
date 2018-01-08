@@ -41,11 +41,16 @@ class Navigation extends Component {
                         <li className="nav-item">
                             <NavLink className="nav-link" exact to="/register">Register</NavLink>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Pricing</a>
-                        </li>
+                        {
+                            // navLink will show if user authorized
+                            auth ?
+                                <li className="nav-item">
+                                    <NavLink className="nav-link" exact to="/calendar">Calendar</NavLink>
+                                </li> : null
+                        }
                     </ul>
                     {
+                        // If authorized will give option to log out, else will be able to sign in using form
                         auth ? <Logout logOut={() => this.logOutUser(history)} userInfo={userInfo}/> :
                             this.state.showLogInForm ?
                                 <LogInForm logInUser={this.logInUser} history={history} toggleShowLogInForm={this.toggleShowLogInForm}/> :
