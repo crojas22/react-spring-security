@@ -1,7 +1,7 @@
 import React from 'react';
 import { BtnInput, BtnSubmit } from "../reusable/Buttons";
 
-const EventsForm = ({addingEventToggle}) => {
+const EventsForm = ({addingEventToggle, selected}) => {
     let _event, _start, _end;
     return(
         <tr>
@@ -10,6 +10,9 @@ const EventsForm = ({addingEventToggle}) => {
                     <input type="text" name="event" ref={input => _event = input} placeholder="Add event"
                            className="form-control border-0 w-75 mb-2" required/>
                     <div>
+                        <div className="py-2">
+                            Date of event: { selected.slice(0, -9) }
+                        </div>
                         <div className="form-group mb-0">
                             <label htmlFor="from">Start time</label>
                             <input type="time" id="from" className="border-0 m-2"
