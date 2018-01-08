@@ -1,7 +1,7 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { getUserInfoAction } from "../actions";
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {getUserInfoAction} from "../actions";
 
 class Home extends React.Component {
     componentDidMount() {
@@ -9,11 +9,11 @@ class Home extends React.Component {
     }
 
     render() {
-        const {auth , userInfo} = this.props;
-        const authorized = auth ? <div>{userInfo.firstName}</div> : <div>not authorized</div>;
 
         return(
-            authorized
+            <div>
+                Hello
+            </div>
         )
     }
 }

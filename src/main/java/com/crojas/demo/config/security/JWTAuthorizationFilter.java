@@ -1,4 +1,4 @@
-package com.crojas.demo.config;
+package com.crojas.demo.config.security;
 
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,9 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.crojas.demo.config.SecurityConstants.HEADER_STRING;
-import static com.crojas.demo.config.SecurityConstants.SECRET;
-import static com.crojas.demo.config.SecurityConstants.TOKEN_PREFIX;
+import static com.crojas.demo.config.security.SecurityConstants.*;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 

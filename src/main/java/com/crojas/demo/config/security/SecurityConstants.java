@@ -1,4 +1,4 @@
-package com.crojas.demo.config;
+package com.crojas.demo.config.security;
 
 class SecurityConstants {
 

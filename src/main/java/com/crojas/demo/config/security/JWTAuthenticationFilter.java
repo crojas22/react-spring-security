@@ -1,4 +1,4 @@
-package com.crojas.demo.config;
+package com.crojas.demo.config.security;
 
 import com.crojas.demo.domain.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.crojas.demo.config.SecurityConstants.*;
+import static com.crojas.demo.config.security.SecurityConstants.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
