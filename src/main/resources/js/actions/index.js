@@ -48,7 +48,7 @@ export const loginAction = (user, history) => {
             if (resp.status === 200) {
                 cookie.set("token", resp.headers.authorization);
                 dispatch(isAuthorized(true));
-                history.push("/");
+                history.push("/calendar");
             }
         })
             .catch(error => console.log(error.response))
@@ -72,7 +72,7 @@ export const getUserInfoAction = history => {
             getUserInfoApi(token).then(resp => {
                 if (resp.status === 202) {
                     dispatch(isAuthorized(true));
-                    dispatch(getUserInfo(resp.data))
+                    dispatch(getUserInfo(resp.data.user))
                 } else {
                     dispatch(isAuthorized(false));
                     dispatch(removeUserInfo());

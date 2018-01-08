@@ -6,3 +6,7 @@
   .registration input:hover,
   .login input:hover {
     border-color: black !important; }
+
+.calendar input[value='<'],
+.calendar input[value='>'] {
+  font-size: 2rem; }

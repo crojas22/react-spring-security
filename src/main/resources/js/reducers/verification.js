@@ -19,7 +19,7 @@ export const userAuthorized = (state=false, action) => {
 export const userInfo = (state={}, action) => {
     switch (action.type) {
         case "USER_INFO":
-            return action.payload.user;
+            return action.payload;
         case "REMOVE_USER_INFO":
             return {};
         default:
