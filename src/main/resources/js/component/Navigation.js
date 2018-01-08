@@ -33,7 +33,7 @@ class Navigation extends Component {
         return(
             <nav className="navbar navbar-expand-md navbar-light bg-light">
                 <NavLink className="navbar-brand" exact to="/">Home</NavLink>
-                <button className="navbar-toggler border-0" type="button" onClick={ this.toggleShowNavBar }>
+                <button className="navbar-toggler border-0" type="button" onClick={this.toggleShowNavBar}>
                     <span className="navbar-toggler-icon"/>
                 </button>
                 <div className={"collapse navbar-collapse " + (this.state.showNavBar ? "show" : "")}>

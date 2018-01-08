@@ -10,3 +10,9 @@
 .calendar input[value='<'],
 .calendar input[value='>'] {
   font-size: 2rem; }
+
+.calendar td {
+  height: 5rem; }
+
+.bg-lightBlue {
+  background-color: rgba(255, 193, 8, 0.5); }

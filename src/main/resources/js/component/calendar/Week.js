@@ -11,14 +11,18 @@ const Week = props => {
             let day = {
                 number: date.date(),
                 date,
-                isCurrentMonth: date.month() === month.month,
+                isCurrentMonth: date.month() === month.month(),
                 isToday: date.isSame(new Date(), "day")
             };
             days.push(
-                <td className="text-center" key={i}>
+                <td key={i} onClick={() => props.selectHandle(day)} className={"text-center "
+                    + (day.date.isSame(props.selected._d) ? " bg-lightBlue text-white " : "")
+                    + (day.isCurrentMonth ? "" : " text-muted bg-light ") + (day.isToday ? " text-primary bg-warning" : "")}>
+
                     {
                         day.number
                     }
+
                 </td>
             );
             date = date.clone();

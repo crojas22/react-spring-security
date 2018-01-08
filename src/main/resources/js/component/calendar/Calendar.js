@@ -9,6 +9,8 @@ class Calendar extends React.Component {
         select: moment()
     };
 
+    selectDayFunc = day => this.setState({ select: day.date})
+
     changeMonth = (int, keyword) => this.setState({ month: this.state.month.add(int, keyword)});
 
     renderLabel = (format, month) => <span className='py-4 d-inline-block text-white'>{month.format(format)}</span>;
@@ -24,7 +26,8 @@ class Calendar extends React.Component {
 
         while (!done) {
             weeks.push(
-                <Week key={date.toString()} date={date.clone()} month={this.state.month}/>
+                <Week key={date.toString()} date={date.clone()} month={this.state.month}
+                      selectHandle={this.selectDayFunc} selected={this.state.select}/>
             );
             date.add(1, "w");
             // count++ > 2 will make sure if 1st week has last month and current month, loop wont stop on 1st week

@@ -4,4 +4,11 @@
   input[value='>'] {
     font-size: 2rem;
   }
+  td {
+    height: 5rem;
+  }
+}
+
+.bg-lightBlue {
+  background-color: $light-blue;
 }
