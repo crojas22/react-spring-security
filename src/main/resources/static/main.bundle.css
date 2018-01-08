@@ -11,8 +11,16 @@
 .calendar input[value='>'] {
   font-size: 2rem; }
 
-.calendar td {
-  height: 5rem; }
+.calendar input[name='event'] {
+  border-bottom: 1px solid #e7e7e7 !important;
+  padding-left: 0;
+  border-radius: 0; }
+  .calendar input[name='event']:hover {
+    border-color: black !important; }
+
+.td {
+  height: 5rem;
+  width: 4rem !important; }
 
 .bg-lightBlue {
   background-color: rgba(255, 193, 8, 0.5); }

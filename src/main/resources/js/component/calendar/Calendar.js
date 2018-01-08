@@ -2,20 +2,24 @@ import React from 'react';
 import moment from 'moment';
 import {BtnInput} from "../reusable/Buttons";
 import Week from "./Week";
+import EventsForm from "./EventsForm";
 
 class Calendar extends React.Component {
     state = {
         month : moment(),
-        select: moment()
+        select: moment(),
+        addingEvent: false
     };
 
-    selectDayFunc = day => this.setState({ select: day.date})
+    selectDayFunc = day => this.setState({ select: day.date});
 
     changeMonth = (int, keyword) => this.setState({ month: this.state.month.add(int, keyword)});
 
     renderLabel = (format, month) => <span className='py-4 d-inline-block text-white'>{month.format(format)}</span>;
 
     renderDaysOfWeek = array => array.map(day => <th className="text-center" key={day}>{day.slice(0,3)}</th>);
+
+    addingEventHandle = () => this.setState({ addingEvent : !this.state.addingEvent });
 
     renderWeeks = () => {
         let weeks = [],
@@ -39,8 +43,9 @@ class Calendar extends React.Component {
 
     render() {
         return(
-            <table className="calendar table">
-                <thead>
+            <div className="table-responsive-sm">
+                <table className="calendar table">
+                    <thead>
                     <tr className="bg-primary">
                         <th colSpan="7" className="text-center">
                             <BtnInput title="<" onClick={() => this.changeMonth(-1, "month")}
@@ -55,17 +60,29 @@ class Calendar extends React.Component {
                         </th>
                     </tr>
                     <tr>
+                        <td colSpan="7" className="border border-white pl-0">
+                            <BtnInput title={this.state.addingEvent? "-":"+"} classes='btn-outline-primary'
+                                      onClick={ this.addingEventHandle }/>
+                        </td>
+                    </tr>
+                    {
+                        this.state.addingEvent ?
+                            <EventsForm addingEventToggle={this.addingEventHandle}/>
+                            : null
+                    }
+                    <tr>
                         {
                             this.renderDaysOfWeek(this.state.month._locale._weekdays)
                         }
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     {
                         this.renderWeeks()
                     }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         )
     }
 }
