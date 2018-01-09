@@ -20,7 +20,16 @@
 
 .td {
   height: 5rem;
-  width: 4rem !important; }
+  width: 4rem !important;
+  position: relative; }
 
 .bg-lightBlue {
   background-color: rgba(255, 193, 8, 0.5); }
+
+.week-span {
+  position: absolute;
+  display: inline-block;
+  bottom: 5px;
+  left: 36%;
+  font-size: .8rem;
+  color: white; }

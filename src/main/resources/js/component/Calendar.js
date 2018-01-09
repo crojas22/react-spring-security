@@ -3,11 +3,12 @@ import moment from 'moment';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import Week from "./calendar/Week";
-import EventsForm from "./calendar/EventsForm";
 import { JustifyContentCenter } from "./reusable/DivReusables";
 import { getUserInfoAction } from "../actions";
 import { BtnInput } from "./reusable/Buttons";
+import Week from "./calendar/Week";
+import EventsForm from "./calendar/EventsForm";
+import EventList from "./calendar/EventList";
 
 class Calendar extends React.Component {
     state = {
@@ -20,8 +21,6 @@ class Calendar extends React.Component {
     componentWillMount() {
         this.props.getUserInfoAction(this.props.history);
     }
-
-    selectDayFunc = day => this.setState({ select: day.date});
 
     renderLabel = (format, month) => <span className='py-4 d-inline-block text-white'>{month.format(format)}</span>;
 
@@ -39,8 +38,9 @@ class Calendar extends React.Component {
 
         while (!done) {
             weeks.push(
-                <Week key={date.toString()} date={date.clone()} month={this.state.month}
-                      selectHandle={this.selectDayFunc} selected={this.state.select}/>
+                <Week key={date.toString()} date={date.clone()} month={ this.state.month }
+                      changeState={ this.changeState } selected={ this.state.select }
+                      events={ this.props.userEvents }/>
             );
             date.add(1, "w");
             // count++ > 2 will make sure if 1st week has last month and current month, loop wont stop on 1st week
@@ -68,7 +68,7 @@ class Calendar extends React.Component {
                                 {
                                     this.renderLabel("MMMM, YYYY", month)
                                 }
-                                {/* forward a mont */}
+                                {/* forward a month */}
                                 <BtnInput title=">" onClick={() => this.changeState("month", month.add(1, "month"))}
                                           classes="btn-outline-primary float-right text-white"/>
                             </th>
@@ -87,6 +87,14 @@ class Calendar extends React.Component {
                                             selected={select}/>
                                 : null
                         }
+
+                        {
+                            showEvents ?
+                                <EventList events={ this.props.userEvents } selected={select}/>
+                                : null
+
+                        }
+
                         <tr>
                             {
                                 this.renderDaysOfWeek(month._locale._weekdays)
@@ -105,10 +113,16 @@ class Calendar extends React.Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        userEvents: state.userEvents
+    }
+};
+
 const  mapDispatchToProps = dispatch => {
     return bindActionCreators({
         getUserInfoAction
     }, dispatch)
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(Calendar));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Calendar));

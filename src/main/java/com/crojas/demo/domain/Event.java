@@ -18,6 +18,8 @@ public class Event {
 
     @NotNull
     private String text, date, startTime, endTime;
+    private boolean isComplete;
+    private boolean isEditing;
 
     @JsonIgnore
     @ManyToOne
@@ -31,5 +33,7 @@ public class Event {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.isComplete = false;
+        this.isEditing = false;
     }
 }

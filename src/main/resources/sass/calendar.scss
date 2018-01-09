@@ -12,8 +12,19 @@
 .td {
   height: 5rem;
   width: 4rem !important;
+  position: relative;
 }
 
 .bg-lightBlue {
   background-color: $light-blue;
+}
+
+// total number of events in week component
+.week-span {
+  position: absolute;
+  display: inline-block;
+  bottom: 5px;
+  left: 36%;
+  font-size: .8rem;
+  color: white;
 }
