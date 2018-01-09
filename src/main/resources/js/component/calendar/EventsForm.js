@@ -11,7 +11,7 @@ const EventsForm = ({addingEventToggle, selected, createEventAction}) => {
         e.preventDefault();
         createEventAction({
             text: _event.value,
-            date: selected.format(),
+            date: selected._d.toString().slice(4,15),
             startTime: _start.value,
             endTime: _end.value
         });
