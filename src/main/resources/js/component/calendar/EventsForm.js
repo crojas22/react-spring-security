@@ -1,17 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { BtnInput, BtnSubmit } from "../reusable/Buttons";
+import { createEventAction } from "../../actions/crudEvents";
 
-const EventsForm = ({addingEventToggle, selected}) => {
+const EventsForm = ({addingEventToggle, selected, createEventAction}) => {
     let _event, _start, _end;
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        createEventAction({
+            text: _event.value,
+            date: selected.format(),
+            startTime: _start.value,
+            endTime: _end.value
+        });
+        _event.value = "", _start.value = "", _end.value = "";
+    };
+
     return(
         <tr>
             <td colSpan="7">
-                <form>
+                <form onSubmit={ handleSubmit }>
                     <input type="text" name="event" ref={input => _event = input} placeholder="Add event"
                            className="form-control border-0 w-75 mb-2" required/>
                     <div>
                         <div className="py-2">
-                            Date of event: { selected.slice(0, -9) }
+                            Date of event: { selected.format("LLLL").slice(0, -9) }
                         </div>
                         <div className="form-group mb-0">
                             <label htmlFor="from">Start time</label>
@@ -35,4 +50,10 @@ const EventsForm = ({addingEventToggle, selected}) => {
     )
 };
 
-export default EventsForm;
+const  mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        createEventAction
+    }, dispatch)
+};
+
+export default connect(null, mapDispatchToProps)(EventsForm);

@@ -1,5 +1,6 @@
 package com.crojas.demo.service;
 
+import com.crojas.demo.domain.Event;
 import com.crojas.demo.domain.Role;
 import com.crojas.demo.domain.User;
 import com.crojas.demo.domain.UserDto;
@@ -41,6 +42,11 @@ public class UserService {
             user.addRole(role);
         }
         user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
+        this.userRepository.save(user);
+    }
+
+    public void createEvent(Event event, User user) {
+        user.addEvent(event);
         this.userRepository.save(user);
     }
 

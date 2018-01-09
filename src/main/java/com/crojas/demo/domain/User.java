@@ -32,10 +32,20 @@ public class User extends BaseEntity {
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Event> events;
 
     protected User() {
         super();
+        roles = new HashSet<>();
+        events = new ArrayList<>();
+    }
+
+    public void addEvent(Event event) {
+        event.setUser(this);
+        events.add(event);
     }
 
     public void addRole(Role role) {

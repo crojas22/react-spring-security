@@ -2,6 +2,7 @@ package com.crojas.demo.web.controller;
 
 import com.crojas.demo.domain.User;
 import com.crojas.demo.domain.UserDto;
+import com.crojas.demo.service.EventService;
 import com.crojas.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,12 @@ import java.util.Map;
 public class AuthenticationController {
 
     private final UserService userService;
+    private final EventService eventService;
 
     @Autowired
-    public AuthenticationController(UserService userService) {
+    public AuthenticationController(UserService userService, EventService eventService) {
         this.userService = userService;
+        this.eventService = eventService;
     }
 
 
@@ -40,6 +43,7 @@ public class AuthenticationController {
     @RequestMapping(value = "/verification")
     public ResponseEntity<Map<String,Object>> getUserInfo(Principal principal) {
         User user = this.userService.findByUsername(principal.getName());
+        System.out.println(user.getUserName());
         Map<String, Object> message = new HashMap<>();
 
         if (user == null) {
@@ -48,6 +52,7 @@ public class AuthenticationController {
         }
         UserDto dto = this.userService.toDto(user);
         message.put("user", dto);
+//        message.put("event", this.eventService.findUserEvents());
         return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
     }
 

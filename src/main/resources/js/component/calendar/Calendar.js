@@ -68,7 +68,7 @@ class Calendar extends React.Component {
                     {
                         this.state.addingEvent ?
                             <EventsForm addingEventToggle={this.addingEventHandle}
-                                        selected={this.state.select.format("LLLL")}/>
+                                        selected={this.state.select}/>
                             : null
                     }
                     <tr>
