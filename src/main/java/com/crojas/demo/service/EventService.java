@@ -1,6 +1,7 @@
 package com.crojas.demo.service;
 
 import com.crojas.demo.domain.Event;
+import com.crojas.demo.domain.User;
 import com.crojas.demo.repo.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,8 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
-//    public List<Event> findUserEvents() {
-//        return this.eventRepository.findAllOrOrderByDate();
-//    }
+    public List<Event> findUserEvents(User user) {
+        return this.eventRepository.findAllByUserOrderByStartTimeAsc(user);
+    }
 
 }

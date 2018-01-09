@@ -43,16 +43,15 @@ public class AuthenticationController {
     @RequestMapping(value = "/verification")
     public ResponseEntity<Map<String,Object>> getUserInfo(Principal principal) {
         User user = this.userService.findByUsername(principal.getName());
-        System.out.println(user.getUserName());
         Map<String, Object> message = new HashMap<>();
 
         if (user == null) {
             message.put("errorMessage", "Need to sign in");
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
-        UserDto dto = this.userService.toDto(user);
-        message.put("user", dto);
-//        message.put("event", this.eventService.findUserEvents());
+        message.put("user", this.userService.toDto(user));
+        message.put("events", this.eventService.findUserEvents(user));
+
         return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
     }
 

@@ -27,6 +27,7 @@ export const getUserInfoApi = token => {
 };
 
 // Crud Event
+
 // Post
 export const createEventApi = (event, token) => {
     return axios({

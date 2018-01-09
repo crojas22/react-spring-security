@@ -1,5 +1,5 @@
 import Cookies from 'universal-cookie';
-import {loginApi, registerApi, getUserInfoApi} from "../api";
+import {loginApi, registerApi, getUserInfoApi, createEventApi} from "../api";
 
 const cookie = new Cookies();
 
@@ -20,6 +20,13 @@ export const isAuthorized = bool => {
 export const getUserInfo = payload => {
     return {
         type: "USER_INFO",
+        payload
+    }
+};
+
+export const getUserEvents = payload => {
+    return {
+        type: "USER_EVENTS",
         payload
     }
 };
@@ -72,7 +79,8 @@ export const getUserInfoAction = history => {
             getUserInfoApi(token).then(resp => {
                 if (resp.status === 202) {
                     dispatch(isAuthorized(true));
-                    dispatch(getUserInfo(resp.data.user))
+                    dispatch(getUserInfo(resp.data.user));
+                    dispatch(getUserEvents(resp.data.events));
                 } else {
                     dispatch(isAuthorized(false));
                     dispatch(removeUserInfo());
@@ -83,5 +91,18 @@ export const getUserInfoAction = history => {
         } else {
             history.push("/login")
         }
+    }
+};
+
+// Crud Events
+
+// Post
+export const createEventAction = event => {
+    return (dispatch) => {
+        const token = cookie.get("token");
+        createEventApi(event, token).then(resp => {
+            console.log(resp)
+        })
+            .catch(error => console.log(error.message))
     }
 };

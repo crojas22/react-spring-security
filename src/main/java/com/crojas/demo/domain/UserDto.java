@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class UserDto {
 
-    private Long userId;
+    private Integer userId;
     private String firstName, lastName, username;
 
-    public UserDto(Long userId, String firstName, String lastName, String username) {
+    public UserDto(Integer userId, String firstName, String lastName, String username) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;

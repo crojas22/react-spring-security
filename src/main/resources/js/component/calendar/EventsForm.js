@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BtnInput, BtnSubmit } from "../reusable/Buttons";
-import { createEventAction } from "../../actions/crudEvents";
+import { createEventAction } from "../../actions";
 
 const EventsForm = ({addingEventToggle, selected, createEventAction}) => {
     let _event, _start, _end;

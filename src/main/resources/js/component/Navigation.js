@@ -15,7 +15,7 @@ class Navigation extends Component {
         showLogInForm: false
     };
 
-    componentDidMount() {
+    componentWillMount() {
         this.props.getUserInfoAction(this.props.history);
     }
 
@@ -29,7 +29,6 @@ class Navigation extends Component {
 
     render() {
         const {history, userInfo, auth} = this.props;
-
         return(
             <nav className="navbar navbar-expand-md navbar-light bg-light">
                 <NavLink className="navbar-brand" exact to="/">Home</NavLink>

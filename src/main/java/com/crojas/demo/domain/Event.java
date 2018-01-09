@@ -1,19 +1,25 @@
 package com.crojas.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
 @Setter
-public class Event extends BaseEntity{
+public class Event {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @NotNull
     private String text, date, startTime, endTime;
 
+    @JsonIgnore
     @ManyToOne
     private User user;
 

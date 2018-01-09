@@ -54,20 +54,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                     .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
-
-//    @Bean
-//    public EvaluationContextExtension extension() {
-//        return new EvaluationContextExtensionSupport() {
-//            @Override
-//            public String getExtensionId() {
-//                return "security";
-//            }
-//
-//            @Override
-//            public Object getRootObject() {
-//                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//                return new SecurityExpressionRoot(authentication) {};
-//            }
-//        };
-//    }
 }

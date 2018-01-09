@@ -2,6 +2,7 @@ package com.crojas.demo.web.controller;
 
 import com.crojas.demo.domain.Event;
 import com.crojas.demo.domain.User;
+import com.crojas.demo.service.EventService;
 import com.crojas.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,24 +14,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Map;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/api/")
 public class EventController {
 
     private final UserService userService;
+    private final EventService eventService;
 
     @Autowired
-    public EventController(UserService userService) {
+    public EventController(UserService userService, EventService eventService) {
         this.userService = userService;
+        this.eventService = eventService;
+    }
+
+    @RequestMapping(value = "get", method = RequestMethod.GET)
+    public ResponseEntity<List<Event>>getEvent(Principal principal) {
+        User user = this.userService.findByUsername(principal.getName());
+        return new ResponseEntity<>(this.eventService.findUserEvents(user), HttpStatus.OK);
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public ResponseEntity<Map<String,Object>> createEvent(@Valid @RequestBody Event event, Principal principal) {
-        System.out.println(principal.getName());
+    public ResponseEntity<List<Event>> createEvent(@Valid @RequestBody Event event, Principal principal) {
         User user = this.userService.findByUsername(principal.getName());
         this.userService.createEvent(event, user);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
