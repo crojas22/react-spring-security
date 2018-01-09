@@ -14,7 +14,7 @@ class Calendar extends React.Component {
         month : moment(),
         select: moment(),
         addingEvent: false,
-        events: false,
+        showEvents: false,
     };
 
     componentWillMount() {
@@ -23,13 +23,12 @@ class Calendar extends React.Component {
 
     selectDayFunc = day => this.setState({ select: day.date});
 
-    changeMonth = (int, keyword) => this.setState({ month: this.state.month.add(int, keyword)});
-
     renderLabel = (format, month) => <span className='py-4 d-inline-block text-white'>{month.format(format)}</span>;
 
     renderDaysOfWeek = array => array.map(day => <th className="text-center" key={day}>{day.slice(0,3)}</th>);
 
-    addingEventHandle = () => this.setState({ addingEvent : !this.state.addingEvent });
+    // General function to change state
+    changeState = (name, target) => this.setState({ [ name ] : target });
 
     renderWeeks = () => {
         let weeks = [],
@@ -52,6 +51,9 @@ class Calendar extends React.Component {
     };
 
     render() {
+
+        let { month, addingEvent, showEvents, select } = this.state;
+
         return(
             <JustifyContentCenter>
                 <div className="table-responsive-sm">
@@ -59,33 +61,35 @@ class Calendar extends React.Component {
                         <thead>
                         <tr className="bg-primary">
                             <th colSpan="7" className="text-center">
-                                <BtnInput title="<" onClick={() => this.changeMonth(-1, "month")}
+                                {/* back a month */}
+                                <BtnInput title="<" onClick={() => this.changeState("month", month.add(-1, "month"))}
                                           classes="btn-outline-primary float-left text-white"/>
 
                                 {
-                                    this.renderLabel("MMMM, YYYY", this.state.month)
+                                    this.renderLabel("MMMM, YYYY", month)
                                 }
-
-                                <BtnInput title=">" onClick={() => this.changeMonth(1, "month")}
+                                {/* forward a mont */}
+                                <BtnInput title=">" onClick={() => this.changeState("month", month.add(1, "month"))}
                                           classes="btn-outline-primary float-right text-white"/>
                             </th>
                         </tr>
                         <tr>
                             <td colSpan="7" className="border border-white pl-0">
                                 <BtnInput title={this.state.addingEvent? "-":"+"} classes='btn-outline-primary'
-                                          onClick={ this.addingEventHandle }/>
-                                <BtnInput title="Events" classes='btn-outline-primary mx-2'/>
+                                          onClick={() => this.changeState("addingEvent", !addingEvent)}/>
+                                <BtnInput title="Events" classes='btn-outline-primary mx-2'
+                                          onClick={() => this.changeState("showEvents", !showEvents)}/>
                             </td>
                         </tr>
                         {
-                            this.state.addingEvent ?
-                                <EventsForm addingEventToggle={this.addingEventHandle}
-                                            selected={this.state.select}/>
+                            addingEvent ?
+                                <EventsForm addingEventToggle={() => this.changeState("addingEvent", !addingEvent)}
+                                            selected={select}/>
                                 : null
                         }
                         <tr>
                             {
-                                this.renderDaysOfWeek(this.state.month._locale._weekdays)
+                                this.renderDaysOfWeek(month._locale._weekdays)
                             }
                         </tr>
                         </thead>

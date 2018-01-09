@@ -19,9 +19,7 @@ class Navigation extends Component {
         this.props.getUserInfoAction(this.props.history);
     }
 
-    toggleShowNavBar = () => this.setState({ showNavBar : !this.state.showNavBar });
-
-    toggleShowLogInForm = () => this.setState({ showLogInForm : !this.state.showLogInForm });
+    changeState = (name, target) => this.setState({ [ name ] : !target });
 
     logOutUser = history => this.props.logoutAction(history);
 
@@ -32,7 +30,10 @@ class Navigation extends Component {
         return(
             <nav className="navbar navbar-expand-md navbar-light bg-light">
                 <NavLink className="navbar-brand" exact to="/">Home</NavLink>
-                <button className="navbar-toggler border-0" type="button" onClick={this.toggleShowNavBar}>
+
+                <button className="navbar-toggler border-0" type="button"
+                        onClick={() => this.changeState("showNavBar", this.state.showNavBar)}>
+
                     <span className="navbar-toggler-icon"/>
                 </button>
                 <div className={"collapse navbar-collapse " + (this.state.showNavBar ? "show" : "")}>
@@ -52,8 +53,12 @@ class Navigation extends Component {
                         // If authorized will give option to log out, else will be able to sign in using form
                         auth ? <Logout logOut={() => this.logOutUser(history)} userInfo={userInfo}/> :
                             this.state.showLogInForm ?
-                                <LogInForm logInUser={this.logInUser} history={history} toggleShowLogInForm={this.toggleShowLogInForm}/> :
-                                <BtnInput onClick={ this.toggleShowLogInForm } title="Log in" classes="btn-primary btn-sm"/>
+
+                                <LogInForm toggleShowLogInForm={() => this.changeState("showLogInForm", this.state.showLogInForm)}
+                                           logInUser={ this.logInUser } history={history}/>
+                                :
+                                <BtnInput onClick={() => this.changeState("showLogInForm", this.state.showLogInForm)}
+                                          title="Log in" classes="btn-primary btn-sm"/>
                     }
                 </div>
             </nav>
