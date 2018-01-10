@@ -1,5 +1,5 @@
 import Cookies from 'universal-cookie';
-import {loginApi, registerApi, getUserInfoApi, createEventApi} from "../api";
+import {loginApi, registerApi, getUserInfoApi, createEventApi, removeEventApi} from "../api";
 
 const cookie = new Cookies();
 
@@ -101,6 +101,17 @@ export const createEventAction = event => {
     return (dispatch) => {
         const token = cookie.get("token");
         createEventApi(event, token).then(resp => {
+            dispatch(getUserEvents(resp.data));
+        })
+            .catch(error => console.log(error.message))
+    }
+};
+
+// Remove
+export const removeEventAction = item_id => {
+    return (dispatch) => {
+        const token = cookie.get("token");
+        removeEventApi(token, item_id).then(resp => {
             dispatch(getUserEvents(resp.data));
         })
             .catch(error => console.log(error.message))

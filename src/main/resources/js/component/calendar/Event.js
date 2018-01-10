@@ -1,8 +1,11 @@
 import React from 'react';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import moment from 'moment';
 import { BtnInput } from "../reusable/Buttons";
 import GoTriangleDown from "react-icons/lib/go/triangle-down";
 import GoTriangleUp from "react-icons/lib/go/triangle-up";
+import { removeEventAction } from "../../actions";
 
 class Event extends React.Component {
     state = {
@@ -21,17 +24,18 @@ class Event extends React.Component {
                     <div className="d-flex">
                         <BtnInput title="Edit" classes="btn-primary border-0 btn-block"/>
                         <BtnInput title="Complete" classes="btn-primary border-0 btn-block m-0"/>
-                        <BtnInput title="Delete" classes="btn-danger border-0 btn-block m-0"/>
+                        <BtnInput title="Delete" classes="btn-danger border-0 btn-block m-0"
+                                  onClick={() => this.props.removeEventAction(this.props.id)}/>
                     </div>
                 </div>
-                <small className='text-muted mr-3'>Start:
-                    {
-                        moment(this.props.startTime, "hh:mm").format("hh:mm a")
+                <small className='text-muted mr-3'>
+                    start: {
+                        moment(this.props.startTime, "hh:mm").format("h:mm a")
                     }
                 </small>
-                <small className="text-muted">End:
-                    {
-                        moment(this.props.endTime, "hh:mm").format("hh:mm a")
+                <small className="text-muted">
+                    end: {
+                        moment(this.props.endTime, "hh:mm").format("h:mm a")
                     }
                 </small>
                 <p className="m-0">
@@ -44,4 +48,10 @@ class Event extends React.Component {
     }
 }
 
-export default Event;
+const  mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        removeEventAction
+    }, dispatch)
+};
+
+export default connect(null, mapDispatchToProps)(Event);

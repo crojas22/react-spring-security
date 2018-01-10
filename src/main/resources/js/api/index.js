@@ -37,3 +37,12 @@ export const createEventApi = (event, token) => {
         data: event
     })
 };
+
+// Remove
+export const removeEventApi = (token, item_id) => {
+    return axios({
+        url: apiUrl(`delete/${item_id}`),
+        method: "delete",
+        headers: { Authorization: `Bearer ${token}` }
+    })
+};

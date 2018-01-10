@@ -21,4 +21,8 @@ public class EventService {
         return this.eventRepository.findAllByUserOrderByStartTimeAsc(user);
     }
 
+    public void removeEvent(Integer id) {
+        this.eventRepository.delete(id);
+    }
+
 }
