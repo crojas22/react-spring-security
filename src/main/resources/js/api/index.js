@@ -26,7 +26,7 @@ export const getUserInfoApi = token => {
     })
 };
 
-// Crud Event
+// Crud EventList
 
 // Post
 export const createEventApi = (event, token) => {
