@@ -1,7 +1,6 @@
 
 .calendar {
-  input[value='<'],
-  input[value='>'] {
+  .arrow {
     font-size: 2rem;
   }
   input[name='event'] {
@@ -13,10 +12,6 @@
   height: 5rem;
   width: 4rem !important;
   position: relative;
-}
-
-.bg-lightBlue {
-  background-color: $light-blue;
 }
 
 // total number of events in week component

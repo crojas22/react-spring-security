@@ -101,7 +101,7 @@ export const createEventAction = event => {
     return (dispatch) => {
         const token = cookie.get("token");
         createEventApi(event, token).then(resp => {
-            console.log(resp)
+            dispatch(getUserEvents(resp.data));
         })
             .catch(error => console.log(error.message))
     }

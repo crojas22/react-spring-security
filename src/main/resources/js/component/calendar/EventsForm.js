@@ -40,10 +40,10 @@ const EventsForm = ({addingEventToggle, selected, createEventAction}) => {
                         </div>
                     </div>
                     <BtnSubmit title="Save"
-                               classes="btn-outline-success mt-2 "/>
+                               classes="btn-outline-primary mt-2 "/>
 
                     <BtnInput classes="btn-outline-danger mt-2 ml-3"
-                              title="cancel" onClick={ addingEventToggle }/>
+                              title="Cancel" onClick={ addingEventToggle }/>
                 </form>
             </td>
         </tr>

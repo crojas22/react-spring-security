@@ -1,8 +1,13 @@
 import React from 'react'
 
 export const BtnInput = ({title, classes, onClick, type}) => (
-    <input type={type} value={title} className={'btn rounded-0 ' + classes} onClick={onClick}/>
+    <button type={type} className={'btn rounded-0 ' + classes} onClick={onClick}>
+        {
+            title
+        }
+    </button>
 );
+
 BtnInput.defaultProps = {
     type: 'button'
 };

@@ -29,17 +29,11 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @RequestMapping(value = "get", method = RequestMethod.GET)
-    public ResponseEntity<List<Event>>getEvent(Principal principal) {
-        User user = this.userService.findByUsername(principal.getName());
-        return new ResponseEntity<>(this.eventService.findUserEvents(user), HttpStatus.OK);
-    }
-
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public ResponseEntity<List<Event>> createEvent(@Valid @RequestBody Event event, Principal principal) {
         User user = this.userService.findByUsername(principal.getName());
         this.userService.createEvent(event, user);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(this.eventService.findUserEvents(user),HttpStatus.CREATED);
     }
 }

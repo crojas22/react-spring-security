@@ -1,6 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import { withRouter } from "react-router-dom";
+import FaMinus from "react-icons/lib/fa/minus";
+import FaPlus from "react-icons/lib/fa/plus";
+import GoThreeBars from "react-icons/lib/go/three-bars";
+import GoX from "react-icons/lib/go/x";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { JustifyContentCenter } from "./reusable/DivReusables";
@@ -63,21 +67,24 @@ class Calendar extends React.Component {
                             <th colSpan="7" className="text-center">
                                 {/* back a month */}
                                 <BtnInput title="<" onClick={() => this.changeState("month", month.add(-1, "month"))}
-                                          classes="btn-outline-primary float-left text-white"/>
+                                          classes="btn-outline-primary float-left text-white arrow"/>
 
                                 {
                                     this.renderLabel("MMMM, YYYY", month)
                                 }
                                 {/* forward a month */}
                                 <BtnInput title=">" onClick={() => this.changeState("month", month.add(1, "month"))}
-                                          classes="btn-outline-primary float-right text-white"/>
+                                          classes="btn-outline-primary float-right text-white arrow"/>
                             </th>
                         </tr>
                         <tr>
                             <td colSpan="7" className="border border-white pl-0">
-                                <BtnInput title={this.state.addingEvent? "-":"+"} classes='btn-outline-primary'
+                                <BtnInput title={addingEvent?<FaMinus size={20}/>:<FaPlus size={20}/>}
+                                          classes={"btn-outline-" + (addingEvent? "danger":"primary")}
                                           onClick={() => this.changeState("addingEvent", !addingEvent)}/>
-                                <BtnInput title="Events" classes='btn-outline-primary mx-2'
+
+                                <BtnInput title={showEvents?<GoX size={20}/>:<GoThreeBars size={20}/>}
+                                          classes={"mx-2 btn-outline-" + (showEvents? "danger":"primary")}
                                           onClick={() => this.changeState("showEvents", !showEvents)}/>
                             </td>
                         </tr>
