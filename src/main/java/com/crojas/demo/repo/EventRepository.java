@@ -19,4 +19,5 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     @Override
     @PreAuthorize("@eventRepository.findOne(#id)?.user?.userName == authentication.name")
     void delete(@Param("id") Integer id);
+
 }

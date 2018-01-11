@@ -29,20 +29,20 @@ export const getUserInfoApi = token => {
 // Crud EventList
 
 // Post
-export const createEventApi = (event, token) => {
+export const axiosBodyApi = (body, url, method, token) => {
     return axios({
-        url: apiUrl("create"),
-        method: "post",
+        url: apiUrl(url),
+        method: method,
         headers: { Authorization: `Bearer ${token}` },
-        data: event
+        data: body
     })
 };
 
-// Remove
-export const removeEventApi = (token, item_id) => {
+// Remove, Complete, Edit
+export const axiosPathApi = (url, method, token) => {
     return axios({
-        url: apiUrl(`delete/${item_id}`),
-        method: "delete",
+        url: apiUrl(url),
+        method: method,
         headers: { Authorization: `Bearer ${token}` }
     })
 };

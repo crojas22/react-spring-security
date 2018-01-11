@@ -1,5 +1,7 @@
 import Cookies from 'universal-cookie';
-import {loginApi, registerApi, getUserInfoApi, createEventApi, removeEventApi} from "../api";
+import {
+    loginApi, registerApi, getUserInfoApi, axiosBodyApi, axiosPathApi
+} from "../api";
 
 const cookie = new Cookies();
 
@@ -73,7 +75,6 @@ export const logoutAction = history => {
 
 export const getUserInfoAction = history => {
     return(dispatch) => {
-        const cookie = new Cookies();
         const token = cookie.get('token');
         if (token) {
             getUserInfoApi(token).then(resp => {
@@ -97,21 +98,21 @@ export const getUserInfoAction = history => {
 // Crud Events
 
 // Post
-export const createEventAction = event => {
+export const axiosBodyAction = (body, url, method) => {
     return (dispatch) => {
         const token = cookie.get("token");
-        createEventApi(event, token).then(resp => {
+        axiosBodyApi(body, url, method, token).then(resp => {
             dispatch(getUserEvents(resp.data));
         })
             .catch(error => console.log(error.message))
     }
 };
 
-// Remove
-export const removeEventAction = item_id => {
+// Remove , Complete, Edit
+export const axiosPathAction = (url, method) => {
     return (dispatch) => {
-        const token = cookie.get("token");
-        removeEventApi(token, item_id).then(resp => {
+        const token = cookie.get('token');
+        axiosPathApi(url, method, token).then(resp => {
             dispatch(getUserEvents(resp.data));
         })
             .catch(error => console.log(error.message))

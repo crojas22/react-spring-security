@@ -25,4 +25,16 @@ public class EventService {
         this.eventRepository.delete(id);
     }
 
+    public void completeEvent(Integer id) {
+        Event event = this.eventRepository.findOne(id);
+        event.setComplete(!event.isComplete());
+        this.eventRepository.save(event);
+    }
+
+    public void editEvent(Event event) {
+        Event event1 = this.eventRepository.findOne(event.getId());
+        event1.setText(event.getText());
+        this.eventRepository.save(event1);
+    }
+
 }

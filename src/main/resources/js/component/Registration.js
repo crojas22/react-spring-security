@@ -28,22 +28,22 @@ const Registration = ({registerAction, history}) => {
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <input type="text" id="firstName" ref={input => _firstName = input}
-                               className="form-control border-0" placeholder="First name" required />
+                               className="form-control" placeholder="First name" required />
                     </div>
                     <div className="form-group col-md-6">
                         <input type="text" name="lastName" ref={input => _lastName = input}
-                               className="form-control border-0" placeholder="Last name" required />
+                               className="form-control" placeholder="Last name" required />
                     </div>
                 </div>
 
                 <FormRowCol>
                     <input type="text" name="email" ref={input => _email = input}
-                           className="form-control border-0" placeholder="Email" required />
+                           className="form-control" placeholder="Email" required />
                 </FormRowCol>
 
                 <FormRowCol>
                     <input type="password" name="password" ref={input => _password = input}
-                           className="form-control border-0" placeholder="New password" required />
+                           className="form-control" placeholder="New password" required />
                 </FormRowCol>
 
                 <BtnSubmit title='Register' classes='btn-primary' />

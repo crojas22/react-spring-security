@@ -2,20 +2,32 @@
 .login input {
   border-bottom: 1px solid #e7e7e7 !important;
   padding-left: 0;
-  border-radius: 0; }
-  .registration input:hover,
-  .login input:hover {
-    border-color: black !important; }
+  border-radius: 0;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0; }
+  .registration input:hover, .registration input:focus,
+  .login input:hover,
+  .login input:focus {
+    border-color: black !important;
+    box-shadow: none !important; }
 
 .calendar .arrow {
   font-size: 2rem; }
 
-.calendar input[name='event'] {
+.calendar input[name='event'],
+.calendar input[name='_edit'] {
   border-bottom: 1px solid #e7e7e7 !important;
   padding-left: 0;
-  border-radius: 0; }
-  .calendar input[name='event']:hover {
-    border-color: black !important; }
+  border-radius: 0;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0; }
+  .calendar input[name='event']:hover, .calendar input[name='event']:focus,
+  .calendar input[name='_edit']:hover,
+  .calendar input[name='_edit']:focus {
+    border-color: black !important;
+    box-shadow: none !important; }
 
 .td {
   height: 5rem;
@@ -29,3 +41,18 @@
   left: 36%;
   font-size: .8rem;
   color: white; }
+
+.completed {
+  text-decoration: line-through;
+  color: #dc3746; }
+
+.bg-clear {
+  background-color: transparent; }
+
+p {
+  padding: 7px 0 7px; }
+
+button {
+  cursor: pointer; }
+  button:focus {
+    box-shadow: none !important; }

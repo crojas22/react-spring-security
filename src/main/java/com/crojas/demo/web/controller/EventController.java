@@ -45,4 +45,19 @@ public class EventController {
 
         return new ResponseEntity<>(this.eventService.findUserEvents(user), HttpStatus.ACCEPTED);
     }
+
+    @RequestMapping(value="complete/{id}", method = RequestMethod.PATCH)
+    public ResponseEntity<List<Event>> completeEvent(@PathVariable Integer id, Principal principal) {
+        User user = this.userService.findByUsername(principal.getName());
+        this.eventService.completeEvent(id);
+
+        return new ResponseEntity<>(this.eventService.findUserEvents(user), HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value="edit", method = RequestMethod.PATCH)
+    public ResponseEntity<List<Event>> editEvent(@RequestBody Event event, Principal principal) {
+        User user = this.userService.findByUsername(principal.getName());
+        this.eventService.editEvent(event);
+        return new ResponseEntity<>(this.eventService.findUserEvents(user), HttpStatus.ACCEPTED);
+    }
 }

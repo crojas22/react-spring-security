@@ -2,7 +2,12 @@
   border-bottom: 1px solid $light-grey !important;
   padding-left: 0;
   border-radius: 0;
-  &:hover {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  &:hover,
+  &:focus {
     border-color: black !important;
+    box-shadow: none !important;
   }
 }

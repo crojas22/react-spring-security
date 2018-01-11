@@ -1,10 +1,9 @@
 import React from 'react';
 import moment from 'moment';
 import { withRouter } from "react-router-dom";
-import FaMinus from "react-icons/lib/fa/minus";
-import FaPlus from "react-icons/lib/fa/plus";
-import GoThreeBars from "react-icons/lib/go/three-bars";
-import GoX from "react-icons/lib/go/x";
+import MdRemove from "react-icons/lib/md/remove";
+import MdAdd from "react-icons/lib/md/add";
+import MdFormatListNumbered from "react-icons/lib/md/format-list-numbered";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { JustifyContentCenter } from "./reusable/DivReusables";
@@ -79,11 +78,11 @@ class Calendar extends React.Component {
                         </tr>
                         <tr>
                             <td colSpan="7" className="border border-white pl-0">
-                                <BtnInput title={addingEvent?<FaMinus size={20}/>:<FaPlus size={20}/>}
+                                <BtnInput title={addingEvent?<MdRemove size={24}/>:<MdAdd size={24}/>}
                                           classes={"btn-outline-" + (addingEvent? "danger":"primary")}
                                           onClick={() => this.changeState("addingEvent", !addingEvent)}/>
 
-                                <BtnInput title={showEvents?<GoX size={20}/>:<GoThreeBars size={20}/>}
+                                <BtnInput title={showEvents?<MdRemove size={24}/>:<MdFormatListNumbered size={24}/>}
                                           classes={"mx-2 btn-outline-" + (showEvents? "danger":"primary")}
                                           onClick={() => this.changeState("showEvents", !showEvents)}/>
                             </td>

@@ -3,7 +3,8 @@
   .arrow {
     font-size: 2rem;
   }
-  input[name='event'] {
+  input[name='event'],
+  input[name='_edit'] {
     @include form-input;
   }
 }
@@ -22,4 +23,24 @@
   left: 36%;
   font-size: .8rem;
   color: white;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #dc3746;
+}
+
+.bg-clear {
+  background-color: transparent;
+}
+
+p {
+  padding: 7px 0 7px;
+}
+
+button {
+  cursor: pointer;
+  &:focus {
+    box-shadow: none !important;
+  }
 }

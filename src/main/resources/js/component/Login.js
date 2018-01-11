@@ -25,11 +25,11 @@ const Login = ({loginAction, history}) => {
 
                 <FormRowCol>
                     <input type="text" name="email" ref={input => _email = input}
-                           className="form-control border-0" placeholder="Email" required/>
+                           className="form-control" placeholder="Email" required/>
                 </FormRowCol>
                 <FormRowCol>
                     <input type="password" name="password" ref={input => _password = input}
-                           className="form-control border-0" placeholder="Password" required/>
+                           className="form-control" placeholder="Password" required/>
                 </FormRowCol>
 
                 <BtnSubmit title='Login' classes='btn-primary'/>

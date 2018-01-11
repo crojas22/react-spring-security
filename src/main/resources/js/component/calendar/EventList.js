@@ -8,7 +8,7 @@ const EventList = ({events, selected}) => {
     return(
         eventsOfDay.map(each => (
             <tr key={each.id}>
-                <td colSpan="7">
+                <td colSpan="7" className={"pt-0 " + (each.complete ? "bg-light" : "")}>
                     <Event {...each}/>
                 </td>
             </tr>
