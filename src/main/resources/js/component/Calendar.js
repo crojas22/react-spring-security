@@ -12,6 +12,7 @@ import { BtnInput } from "./reusable/Buttons";
 import Week from "./calendar/Week";
 import EventsForm from "./calendar/EventsForm";
 import EventList from "./calendar/EventList";
+import DataBar from "./calendar/DataBar";
 
 class Calendar extends React.Component {
     state = {
@@ -71,13 +72,14 @@ class Calendar extends React.Component {
                                 {
                                     this.renderLabel("MMMM, YYYY", month)
                                 }
+
                                 {/* forward a month */}
                                 <BtnInput title=">" onClick={() => this.changeState("month", month.add(1, "month"))}
                                           classes="btn-outline-primary float-right text-white arrow"/>
                             </th>
                         </tr>
                         <tr>
-                            <td colSpan="7" className="border border-white pl-0">
+                            <td colSpan="7" className="border border-white px-0">
                                 <BtnInput title={addingEvent?<MdRemove size={24}/>:<MdAdd size={24}/>}
                                           classes={"btn-outline-" + (addingEvent? "danger":"primary")}
                                           onClick={() => this.changeState("addingEvent", !addingEvent)}/>
@@ -85,22 +87,19 @@ class Calendar extends React.Component {
                                 <BtnInput title={showEvents?<MdRemove size={24}/>:<MdFormatListNumbered size={24}/>}
                                           classes={"mx-2 btn-outline-" + (showEvents? "danger":"primary")}
                                           onClick={() => this.changeState("showEvents", !showEvents)}/>
+
+                                {/* Bar with total events / completed events */}
+                                <DataBar events={ this.props.userEvents } month={ this.state.month }/>
                             </td>
                         </tr>
                         {
-                            addingEvent ?
-                                <EventsForm addingEventToggle={() => this.changeState("addingEvent", !addingEvent)}
-                                            selected={select}/>
-                                : null
+                            addingEvent ? <EventsForm addingEventToggle={() => this.changeState("addingEvent", !addingEvent)}
+                                                      selected={select}/> : null
                         }
 
                         {
-                            showEvents ?
-                                <EventList events={ this.props.userEvents } selected={select}/>
-                                : null
-
+                            showEvents ? <EventList events={ this.props.userEvents } selected={select}/> : null
                         }
-
                         <tr>
                             {
                                 this.renderDaysOfWeek(month._locale._weekdays)

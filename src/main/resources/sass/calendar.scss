@@ -44,3 +44,15 @@ button {
     box-shadow: none !important;
   }
 }
+
+@media only screen and (max-width: 472px) {
+  .month-data {
+    width: 100% !important;
+    margin-top: 12px;
+  }
+}
+@media only screen and (min-width: 473px) {
+  .month-data {
+    width: 75% !important;
+  }
+}
