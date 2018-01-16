@@ -4,8 +4,10 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { BtnInput, BtnSubmit } from "../reusable/Buttons";
 import { axiosBodyAction } from "../../actions";
+import Alert from "../reusable/Alert";
+import { getMessageAction } from "../../actions/alert";
 
-const EventsForm = ({addingEventToggle, selected, axiosBodyAction, events}) => {
+const EventsForm = ({addingEventToggle, selected, axiosBodyAction, events, getMessageAction}) => {
     let _event, _start, _end;
 
     // Will return array of events as long as not within current events start time and end time
@@ -34,14 +36,16 @@ const EventsForm = ({addingEventToggle, selected, axiosBodyAction, events}) => {
                 endTime: _end.value
             }, "create", "post");
             _event.value = "", _start.value = "", _end.value = "";
+            getMessageAction("Success!! Event added", true, "success");
         } else {
-            alert("time slot already taken")
+            getMessageAction("Time slot taken or end time is before start time", true, "danger");
         }
     };
 
     return(
         <tr>
             <td colSpan="7">
+                <Alert />
                 <form onSubmit={ handleSubmit }>
                     <div>
                         <div className="py-2">
@@ -75,7 +79,8 @@ const EventsForm = ({addingEventToggle, selected, axiosBodyAction, events}) => {
 
 const  mapDispatchToProps = dispatch => {
     return bindActionCreators({
-        axiosBodyAction
+        axiosBodyAction,
+        getMessageAction
     }, dispatch)
 };
 
