@@ -12,8 +12,11 @@ import java.util.*;
 @Entity
 @Getter
 @Setter
-public class User extends BaseEntity {
+public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @NotNull
     private String firstName, lastName;
 
