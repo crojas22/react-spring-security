@@ -33,6 +33,13 @@ export const getUserEvents = payload => {
     }
 };
 
+export const getUserContacts = payload => {
+    return {
+        type: "USER_CONTACTS",
+        payload
+    }
+};
+
 export const removeUserInfo = () => {
     return {
         type: "REMOVE_USER_INFO"
@@ -98,11 +105,11 @@ export const getUserInfoAction = history => {
 // Crud Events
 
 // Post
-export const axiosBodyAction = (body, url, method) => {
+export const axiosBodyAction = (body, url, method, func) => {
     return (dispatch) => {
         const token = cookie.get("token");
         axiosBodyApi(body, url, method, token).then(resp => {
-            dispatch(getUserEvents(resp.data));
+            dispatch(func(resp.data));
         })
             .catch(error => console.log(error.message))
     }

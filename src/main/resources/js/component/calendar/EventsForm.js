@@ -3,11 +3,11 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { BtnInput, BtnSubmit } from "../reusable/Buttons";
-import { axiosBodyAction } from "../../actions";
+import { axiosBodyAction, getUserEvents } from "../../actions";
 import Alert from "../reusable/Alert";
 import { getMessageAction } from "../../actions/alert";
 
-const EventsForm = ({addingEventToggle, selected, axiosBodyAction, events, getMessageAction}) => {
+const EventsForm = ({addingEventToggle, selected, axiosBodyAction, events, getMessageAction, getUserEvents}) => {
     let _event, _start, _end;
 
     // Will return array of events as long as not within current events start time and end time
@@ -29,12 +29,13 @@ const EventsForm = ({addingEventToggle, selected, axiosBodyAction, events, getMe
     const handleSubmit = e => {
         e.preventDefault();
         if (verifyTime().length === events.length) {
+            // Function takes 4 parameters
             axiosBodyAction({
                 text: _event.value,
                 date: selected._d.toString().slice(4,15),
                 startTime: _start.value,
                 endTime: _end.value
-            }, "create", "post");
+            }, "create", "post", getUserEvents);
             _event.value = "", _start.value = "", _end.value = "";
             getMessageAction("Success!! Event added", true, "success");
         } else {
@@ -81,7 +82,8 @@ const EventsForm = ({addingEventToggle, selected, axiosBodyAction, events, getMe
 const  mapDispatchToProps = dispatch => {
     return bindActionCreators({
         axiosBodyAction,
-        getMessageAction
+        getMessageAction,
+        getUserEvents
     }, dispatch)
 };
 

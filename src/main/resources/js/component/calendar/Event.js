@@ -9,7 +9,7 @@ import MdCheckBox from "react-icons/lib/md/check-box";
 import MdCheckBoxOutlineBlank from "react-icons/lib/md/check-box-outline-blank";
 import MdClose from "react-icons/lib/md/close";
 import MdEdit from "react-icons/lib/md/edit"
-import {axiosBodyAction, axiosPathAction} from "../../actions";
+import { axiosBodyAction, axiosPathAction, getUserEvents } from "../../actions";
 
 class Event extends React.Component {
     state = {
@@ -21,10 +21,11 @@ class Event extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
+        // Function takes 4 parameters
         this.props.axiosBodyAction({
             id: this.props.id,
             text: this._edit.value
-        }, "edit", "patch");
+        }, "edit", "patch", this.props.getUserEvents);
         this.setState({ isEditing: !this.state.isEditing });
     };
 
@@ -79,7 +80,8 @@ class Event extends React.Component {
 const  mapDispatchToProps = dispatch => {
     return bindActionCreators({
         axiosPathAction,
-        axiosBodyAction
+        axiosBodyAction,
+        getUserEvents
     }, dispatch)
 };
 
