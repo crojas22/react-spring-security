@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import MdHome from "react-icons/lib/md/home";
 import LogInForm from "./navbar/LogInForm";
 import { BtnInput } from "./reusable/Buttons";
 import {getUserInfoAction, loginAction, logoutAction} from "../actions";
@@ -12,7 +13,8 @@ class Navigation extends Component {
 
     state = {
         showNavBar : false,
-        showLogInForm: false
+        showLogInForm: false,
+        isDown: false
     };
 
     componentWillMount() {
@@ -26,10 +28,15 @@ class Navigation extends Component {
     logInUser = (user, history) => this.props.loginAction(user, history);
 
     render() {
-        const {history, userInfo, auth} = this.props;
+        const {history, userInfo, auth, location} = this.props;
         return(
-            <nav className="navbar navbar-expand-md navbar-light bg-light">
-                <NavLink className="navbar-brand" exact to="/">Home</NavLink>
+
+            // Will toggle between transparent depending on url
+            <nav className={"navbar navbar-expand-md " + (location.pathname !== "/" ? "bg-light navbar-light" :
+                location.pathname === "/" && this.state.isDown ? "fixed-top bg-light navbar-light"
+                    : "fixed-top bg-transparent navbar-dark")}>
+
+                <NavLink className="navbar-brand" exact to="/"><MdHome size={28}/></NavLink>
 
                 <button className="navbar-toggler border-0" type="button"
                         onClick={() => this.changeState("showNavBar", this.state.showNavBar)}>
@@ -38,9 +45,6 @@ class Navigation extends Component {
                 </button>
                 <div className={"collapse navbar-collapse " + (this.state.showNavBar ? "show" : "")}>
                     <ul className="navbar-nav mr-auto">
-                        <li className="nav-item">
-                            <NavLink className="nav-link" exact to="/register">Register</NavLink>
-                        </li>
                         {
                             // navLink will show if user authorized
                             auth ?
@@ -48,6 +52,9 @@ class Navigation extends Component {
                                     <NavLink className="nav-link" exact to="/calendar">Calendar</NavLink>
                                 </li> : null
                         }
+                        <li className="nav-item">
+                            <NavLink className="nav-link" exact to="/register">Register</NavLink>
+                        </li>
                     </ul>
                     {
                         // If authorized will give option to log out, else will be able to sign in using form
@@ -58,7 +65,7 @@ class Navigation extends Component {
                                            logInUser={ this.logInUser } history={history}/>
                                 :
                                 <BtnInput onClick={() => this.changeState("showLogInForm", this.state.showLogInForm)}
-                                          title="Log in" classes="btn-primary btn-sm"/>
+                                          title="Log in" classes="btn-primary "/>
                     }
                 </div>
             </nav>
