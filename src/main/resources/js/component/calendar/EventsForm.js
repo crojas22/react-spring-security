@@ -22,11 +22,9 @@ const EventsForm = ({addingEventToggle, selected, axiosBodyAction}) => {
         <tr>
             <td colSpan="7">
                 <form onSubmit={ handleSubmit }>
-                    <input type="text" name="event" ref={input => _event = input} placeholder="Add event"
-                           className="form-control w-75 mb-2" required/>
                     <div>
                         <div className="py-2">
-                            Date of event: { selected.format("LLLL").slice(0, -9) }
+                            For: { selected.format("LLLL").slice(0, -9) }
                         </div>
                         <div className="form-group mb-0">
                             <label htmlFor="from">Start time</label>
@@ -38,6 +36,10 @@ const EventsForm = ({addingEventToggle, selected, axiosBodyAction}) => {
                             <input type="time" id="to" className="border-0 m-2"
                                    ref={input => _end = input} required/>
                         </div>
+                    </div>
+                    <div>
+                        <input type="text" name="event" ref={input => _event = input} placeholder="Type event"
+                               className="form-control w-75 mb-2" required/>
                     </div>
                     <BtnSubmit title="Save"
                                classes="btn-outline-primary mt-2 "/>
