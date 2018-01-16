@@ -1,9 +1,7 @@
 import React from 'react';
 import Event from "./Event";
 
-const EventList = ({events, selected}) => {
-
-    // const eventsPerDay = events.filter(each => each.date === selected._d.toString().slice(4,15));
+const EventList = ({events}) => {
 
     return(
         events.map(each => (

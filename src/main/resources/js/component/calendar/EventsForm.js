@@ -47,6 +47,7 @@ const EventsForm = ({addingEventToggle, selected, axiosBodyAction, events, getMe
             <td colSpan="7">
                 <Alert />
                 <form onSubmit={ handleSubmit }>
+                    <h4>New Event</h4>
                     <div>
                         <div className="py-2">
                             For: { selected.format("LLLL").slice(0, -9) }
