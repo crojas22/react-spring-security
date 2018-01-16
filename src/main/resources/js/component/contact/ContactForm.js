@@ -27,7 +27,7 @@ const ContactForm = ({toggleContactForm}) => {
                            className="form-control" placeholder="Phone number" required />
                 </FormRowCol>
                 <FormRowCol>
-                    <input type="text" name="email" ref={input => _email = input}
+                    <input type="email" name="email" ref={input => _email = input}
                            className="form-control" placeholder="Email" />
                 </FormRowCol>
 

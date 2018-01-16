@@ -1,9 +1,6 @@
 package com.crojas.demo.service;
 
-import com.crojas.demo.domain.Event;
-import com.crojas.demo.domain.Role;
-import com.crojas.demo.domain.User;
-import com.crojas.demo.domain.UserDto;
+import com.crojas.demo.domain.*;
 import com.crojas.demo.repo.RoleRepository;
 import com.crojas.demo.repo.UserRepository;
 import lombok.NonNull;
@@ -47,6 +44,11 @@ public class UserService {
 
     public void createEvent(Event event, User user) {
         user.addEvent(event);
+        this.userRepository.save(user);
+    }
+
+    public void createContact(Contact contact, User user) {
+        user.addContact(contact);
         this.userRepository.save(user);
     }
 

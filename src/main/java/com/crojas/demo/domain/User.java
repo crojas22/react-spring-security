@@ -40,10 +40,21 @@ public class User {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Event> events;
 
-    protected User() {
-        super();
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Contact> contacts;
+
+    {
         roles = new HashSet<>();
         events = new ArrayList<>();
+        contacts = new ArrayList<>();
+    }
+
+    protected User() {
+    }
+
+    public void addContact(Contact contact) {
+        contact.setUser(this);
+        contacts.add(contact);
     }
 
     public void addEvent(Event event) {
