@@ -52,9 +52,20 @@ class Navigation extends Component {
                                     <NavLink className="nav-link" exact to="/calendar">Calendar</NavLink>
                                 </li> : null
                         }
-                        <li className="nav-item">
-                            <NavLink className="nav-link" exact to="/register">Register</NavLink>
-                        </li>
+                        {
+                            // navLink will show if user authorized
+                            auth ?
+                                <li className="nav-item">
+                                    <NavLink className="nav-link" exact to="/contacts">Contacts</NavLink>
+                                </li> : null
+                        }
+                        {
+                            auth ?
+                                null :
+                                <li className="nav-item">
+                                    <NavLink className="nav-link" exact to="/register">Register</NavLink>
+                                </li>
+                        }
                     </ul>
                     {
                         // If authorized will give option to log out, else will be able to sign in using form
