@@ -2,7 +2,9 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: {
-        main: ['./src/main/resources/js/index.js', './src/main/resources/sass/main.scss']
+        main: [
+            './src/main/resources/js/index.js', './src/main/resources/sass/main.scss'
+        ]
     },
     output: {
         path: __dirname + '/src/main/resources/static/',
@@ -13,7 +15,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader'
+                loader: "babel-loader"
             },
             {
                 test: /\.(sass|scss)$/,
@@ -27,4 +29,4 @@ module.exports = {
             allChunks: true,
         })
     ]
-}
+};

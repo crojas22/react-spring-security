@@ -8,7 +8,7 @@ import Calendar from "./Calendar";
 
 const App = () => {
     return(
-        <div>
+        <div style={{height: "100%"}}>
             <Navigation />
             <Switch>
                 <Route exact path="/" render={props => (<Home {...props}/>)}/>
