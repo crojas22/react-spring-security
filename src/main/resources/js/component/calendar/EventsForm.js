@@ -1,21 +1,42 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import moment from "moment";
+import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { BtnInput, BtnSubmit } from "../reusable/Buttons";
 import { axiosBodyAction } from "../../actions";
 
-const EventsForm = ({addingEventToggle, selected, axiosBodyAction}) => {
+const EventsForm = ({addingEventToggle, selected, axiosBodyAction, events}) => {
     let _event, _start, _end;
+
+    // Will return array of events as long as not within current events start time and end time
+    const verifyTime = () => {
+        let newEventStart = moment(_start.value, "H:mm"),
+            newEventEnd = moment(_end.value, "H:mm");
+        if (newEventStart > newEventEnd) return [];
+        return events.filter(each => {
+            let currentEventStart = moment(each.startTime, "H:mm"),
+                currentEventEnd = moment(each.endTime, "H:mm");
+            return !currentEventStart.isBetween(newEventStart, newEventEnd)
+                && !currentEventEnd.isBetween(newEventStart, newEventEnd)
+                && !newEventStart.isBetween(currentEventStart, currentEventEnd)
+                && !newEventEnd.isBetween(currentEventStart, currentEventEnd);
+        })
+
+    };
 
     const handleSubmit = e => {
         e.preventDefault();
-        axiosBodyAction({
-            text: _event.value,
-            date: selected._d.toString().slice(4,15),
-            startTime: _start.value,
-            endTime: _end.value
-        }, "create", "post");
-        _event.value = "", _start.value = "", _end.value = "";
+        if (verifyTime().length === events.length) {
+            axiosBodyAction({
+                text: _event.value,
+                date: selected._d.toString().slice(4,15),
+                startTime: _start.value,
+                endTime: _end.value
+            }, "create", "post");
+            _event.value = "", _start.value = "", _end.value = "";
+        } else {
+            alert("time slot already taken")
+        }
     };
 
     return(

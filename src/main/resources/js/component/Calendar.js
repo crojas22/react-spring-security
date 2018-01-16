@@ -58,6 +58,9 @@ class Calendar extends React.Component {
 
         let { month, addingEvent, showEvents, select } = this.state;
 
+        // Will return filtered array with only events of selected date
+        const eventsPerDay = this.props.userEvents.filter(each => each.date === select._d.toString().slice(4,15));
+
         return(
             <JustifyContentCenter>
                 <div className="table-responsive-sm">
@@ -94,11 +97,11 @@ class Calendar extends React.Component {
                         </tr>
                         {
                             addingEvent ? <EventsForm addingEventToggle={() => this.changeState("addingEvent", !addingEvent)}
-                                                      selected={select}/> : null
+                                                      selected={select} events={eventsPerDay}/> : null
                         }
 
                         {
-                            showEvents ? <EventList events={ this.props.userEvents } selected={select}/> : null
+                            showEvents ? <EventList events={ eventsPerDay } selected={select}/> : null
                         }
                         <tr>
                             {
