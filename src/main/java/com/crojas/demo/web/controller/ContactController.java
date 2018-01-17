@@ -53,4 +53,12 @@ public class ContactController {
 
         return new ResponseEntity<>(this.contactService.findUsersContact(user), HttpStatus.ACCEPTED);
     }
+
+    @RequestMapping(value="edit/contact", method = RequestMethod.PATCH)
+    public ResponseEntity<List<Contact>> editContact(@RequestBody Contact contact, Principal principal) {
+        User user = this.userService.findByUsername(principal.getName());
+        this.contactService.editContact(contact);
+
+        return new ResponseEntity<>(this.contactService.findUsersContact(user), HttpStatus.ACCEPTED);
+    }
 }

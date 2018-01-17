@@ -101,6 +101,9 @@ body {
 .contact-list svg {
   margin: 0 0.5rem 0.3rem 0; }
 
+.custom-select {
+  margin: 0 .5rem 0 0 !important; }
+
 h4 {
   margin-top: 8px; }
 

@@ -13,6 +13,7 @@ import MdEdit from "react-icons/lib/md/edit";
 import MdStar from "react-icons/lib/md/star";
 import MdStarOutline from "react-icons/lib/md/star-outline";
 import { axiosBodyAction, axiosPathAction, getUserContacts } from "../../actions";
+import EditForm from "./EditForm";
 
 class IndividualContact extends React.Component {
     state = {
@@ -22,14 +23,28 @@ class IndividualContact extends React.Component {
 
     changeState = (name, target) => this.setState({ [ name ] : target });
 
+    submitHandle = (variable, e) => {
+        e.preventDefault();
+        this.props.axiosBodyAction({
+            id: this.props.id,
+            [ variable ]: this._edit.value
+        }, "edit/contact", "patch", this.props.getUserContacts);
+        console.log(variable)
+        this.setState({ isEditing: !this.state.isEditing });
+    };
+
     render() {
+        const options = ["Name", "Phone", "Email", "Company"];
+
         return(
             <div>
                 <div className="pt-3">
-                    <MdAccountCircle size={28}/>
+                    {
+                        this.props.favorite ? <MdStar size={28} color={"gold"}/> : <MdAccountCircle size={28}/>
+                    }
                     <p className="my-0 mx-3 d-inline-block">
                         {
-                            `${this.props.firstName} ${this.props.lastName}`
+                            this.props.name
                         }
                     </p>
                     <BtnInput onClick={() => this.changeState("isActive", !this.state.isActive)}
@@ -40,7 +55,7 @@ class IndividualContact extends React.Component {
                     <div>
                         <div className="rounded-circle mx-auto">
                             {
-                                this.props.firstName.slice(0,1).toUpperCase()
+                                this.props.name.slice(0,1).toUpperCase()
                             }
                         </div>
                         <div className="d-flex flex-wrap flex-lg-nowrap my-4">
@@ -53,7 +68,7 @@ class IndividualContact extends React.Component {
                             <div className="btn-block text-center m-0 py-1">
                                 <FaPhoneSquare size={24}/>
                                 {
-                                    this.props.phoneNumber
+                                    this.props.phone
                                 }
                             </div>
                             <div className="btn-block text-center m-0 py-1 flex-">
@@ -64,13 +79,20 @@ class IndividualContact extends React.Component {
                             </div>
                         </div>
                     </div>
+                    {
+                        this.state.isEditing ? <EditForm selectOptions={options} {...this.props}
+                            inputRef={input => this._edit = input} selectRef={input => this._select = input}
+                            submitHandle={() => this.submitHandle(this._select.value.toLocaleLowerCase(), event)}/>
+                            : null
+                    }
                     <div className="d-flex">
-                        <BtnInput title={<MdEdit size={20}/>} classes="btn-primary border-0 btn-block"
+                        <BtnInput title={this.state.isEditing ? "Cancel" : <MdEdit size={20}/>}
+                                  classes="border-0 btn-block btn-primary"
                                   onClick={() => this.changeState("isEditing", !this.state.isEditing)}/>
 
                         <BtnInput title={this.props.favorite ? <MdStar size={20}/> : <MdStarOutline size={20}/>}
                                   classes="btn-primary border-0 btn-block m-0" onClick={() => this.props.axiosPathAction(
-                            `complete/contact/${this.props.id}`, "patch", getUserContacts
+                            `favorite/${this.props.id}`, "patch", getUserContacts
                         )}/>
 
                         <BtnInput title={<MdClose size={20}/>} classes="btn-danger border-0 btn-block m-0"

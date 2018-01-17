@@ -8,34 +8,29 @@ import { getMessageAction } from "../../actions/alert";
 import Alert from "../reusable/Alert";
 
 const ContactForm = ({toggleContactForm, axiosBodyAction, getUserContacts, getMessageAction}) => {
-    let _firstName, _lastName , _company, _phone, _email;
+    let _name , _company, _phone, _email;
 
     const handleSubmit = e => {
         e.preventDefault();
         axiosBodyAction({
-            firstName: _firstName.value,
-            lastName: _lastName.value,
+            name: _name.value,
             company: _company.value,
             email: _email.value,
-            phoneNumber: _phone.value
+            phone: _phone.value
         }, "newcontact", "post", getUserContacts);
-        _firstName.value = "", _lastName.value = "", _company.value = "", _phone.value = "", _email.value = "";
+        _name.value = "", _company.value = "", _phone.value = "", _email.value = "";
         getMessageAction("Success!! Contact added", true, "success");
     };
 
     return(
         <div className="px-2">
             <Alert />
-            <form className="contact-form" onSubmit={handleSubmit}>
+            <form className="contact-form w-75" onSubmit={handleSubmit}>
                 <h4>New Contact</h4>
                 <div className="form-row">
-                    <div className="form-group col-md-6">
-                        <input type="text" id="firstName" ref={input => _firstName = input}
-                               className="form-control" placeholder="First name" required />
-                    </div>
-                    <div className="form-group col-md-6">
-                        <input type="text" name="lastName" ref={input => _lastName = input}
-                               className="form-control" placeholder="Last name" required />
+                    <div className="form-group col-md-8">
+                        <input type="text" id="name" ref={input => _name = input}
+                               className="form-control" placeholder="Name" required />
                     </div>
                 </div>
                 <FormRowCol>

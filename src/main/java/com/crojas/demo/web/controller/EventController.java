@@ -46,7 +46,7 @@ public class EventController {
         return new ResponseEntity<>(this.eventService.findUserEvents(user), HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value="complete/{id}", method = RequestMethod.PATCH)
+    @RequestMapping(value="complete/event/{id}", method = RequestMethod.PATCH)
     public ResponseEntity<List<Event>> completeEvent(@PathVariable Integer id, Principal principal) {
         User user = this.userService.findByUsername(principal.getName());
         this.eventService.completeEvent(id);

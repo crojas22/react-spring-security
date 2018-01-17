@@ -15,8 +15,7 @@ public class Contact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull
-    private String firstName, lastName, phoneNumber;
-    private String email, company;
+    private String name, phone,email, company;
     private boolean favorite;
 
     @ManyToOne
@@ -30,11 +29,10 @@ public class Contact {
     protected Contact() {
     }
 
-    public Contact(String firstName, String lastName, String company, String email, String phoneNumber, User user) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Contact(String name, String company, String email, String phone) {
+        this.name = name;
         this.company = company;
         this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
     }
 }

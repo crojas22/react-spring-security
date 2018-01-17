@@ -20,7 +20,7 @@ class Contact extends React.Component {
 
     changeState = (name, target) => this.setState({ [ name ] : target });
 
-    filterByLetter = letter => this.props.contacts.filter(each => each.firstName.slice(0,1).toUpperCase() === letter);
+    filterByLetter = letter => this.props.contacts.filter(each => each.name.slice(0,1).toUpperCase() === letter);
 
     renderAlphabetical = () => {
         const array = [];

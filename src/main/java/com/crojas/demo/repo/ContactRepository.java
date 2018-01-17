@@ -14,7 +14,7 @@ import java.util.List;
 @RepositoryRestResource(exported = false)
 public interface ContactRepository extends JpaRepository<Contact, Integer> {
 
-    List<Contact> findAllByUserOrderByFirstNameAsc(User user);
+    List<Contact> findAllByUserOrderByNameAsc(User user);
 
     @Override
     @PreAuthorize("@contactRepository.findOne(#id)?.user?.userName == authentication.name")
