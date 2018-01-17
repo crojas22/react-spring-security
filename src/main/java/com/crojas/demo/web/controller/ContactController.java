@@ -45,4 +45,12 @@ public class ContactController {
 
         return new ResponseEntity<>(this.contactService.findUsersContact(user), HttpStatus.ACCEPTED);
     }
+
+    @RequestMapping(value="favorite/{id}", method = RequestMethod.PATCH)
+    public ResponseEntity<List<Contact>> favoriteContact(@PathVariable Integer id, Principal principal) {
+        User user = this.userService.findByUsername(principal.getName());
+        this.contactService.favoriteContact(id);
+
+        return new ResponseEntity<>(this.contactService.findUsersContact(user), HttpStatus.ACCEPTED);
+    }
 }

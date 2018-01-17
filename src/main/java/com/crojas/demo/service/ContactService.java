@@ -25,4 +25,10 @@ public class ContactService {
     public List<Contact> findUsersContact(User user) {
         return this.contactRepository.findAllByUserOrderByFirstNameAsc(user);
     }
+
+    public void favoriteContact(Integer id) {
+        Contact contact = this.contactRepository.findOne(id);
+        contact.setFavorite(!contact.isFavorite());
+        this.contactRepository.save(contact);
+    }
 }

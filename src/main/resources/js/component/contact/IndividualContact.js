@@ -70,7 +70,7 @@ class IndividualContact extends React.Component {
 
                         <BtnInput title={this.props.favorite ? <MdStar size={20}/> : <MdStarOutline size={20}/>}
                                   classes="btn-primary border-0 btn-block m-0" onClick={() => this.props.axiosPathAction(
-                            `complete/${this.props.id}`, "patch", getUserContacts
+                            `complete/contact/${this.props.id}`, "patch", getUserContacts
                         )}/>
 
                         <BtnInput title={<MdClose size={20}/>} classes="btn-danger border-0 btn-block m-0"
