@@ -18,6 +18,10 @@ public class ContactService {
         this.contactRepository = contactRepository;
     }
 
+    public void removeContact(Integer id) {
+        this.contactRepository.delete(id);
+    }
+
     public List<Contact> findUsersContact(User user) {
         return this.contactRepository.findAllByUserOrderByFirstNameAsc(user);
     }

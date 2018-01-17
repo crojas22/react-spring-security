@@ -1,12 +1,32 @@
 import React from 'react';
 import { FormRowCol } from "../reusable/DivReusables";
 import { BtnInput, BtnSubmit } from "../reusable/Buttons";
+import { axiosBodyAction, getUserContacts } from "../../actions";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getMessageAction } from "../../actions/alert";
+import Alert from "../reusable/Alert";
 
-const ContactForm = ({toggleContactForm}) => {
+const ContactForm = ({toggleContactForm, axiosBodyAction, getUserContacts, getMessageAction}) => {
     let _firstName, _lastName , _company, _phone, _email;
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        axiosBodyAction({
+            firstName: _firstName.value,
+            lastName: _lastName.value,
+            company: _company.value,
+            email: _email.value,
+            phoneNumber: _phone.value
+        }, "newcontact", "post", getUserContacts);
+        _firstName.value = "", _lastName.value = "", _company.value = "", _phone.value = "", _email.value = "";
+        getMessageAction("Success!! Contact added", true, "success");
+    };
+
     return(
-        <div>
-            <form className="contact-form">
+        <div className="px-2">
+            <Alert />
+            <form className="contact-form" onSubmit={handleSubmit}>
                 <h4>New Contact</h4>
                 <div className="form-row">
                     <div className="form-group col-md-6">
@@ -41,4 +61,12 @@ const ContactForm = ({toggleContactForm}) => {
     )
 };
 
-export default ContactForm;
+const  mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        axiosBodyAction,
+        getMessageAction,
+        getUserContacts
+    }, dispatch)
+};
+
+export default connect(null, mapDispatchToProps)(ContactForm);

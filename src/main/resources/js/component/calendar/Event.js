@@ -3,12 +3,12 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import moment from 'moment';
 import {BtnInput, BtnSubmit} from "../reusable/Buttons";
-import GoTriangleDown from "react-icons/lib/go/triangle-down";
-import GoTriangleUp from "react-icons/lib/go/triangle-up";
+import FaChevronDown from "react-icons/lib/fa/chevron-down";
+import FaChevronUp from "react-icons/lib/fa/chevron-up";
 import MdCheckBox from "react-icons/lib/md/check-box";
 import MdCheckBoxOutlineBlank from "react-icons/lib/md/check-box-outline-blank";
 import MdClose from "react-icons/lib/md/close";
-import MdEdit from "react-icons/lib/md/edit"
+import MdEdit from "react-icons/lib/md/edit";
 import { axiosBodyAction, axiosPathAction, getUserEvents } from "../../actions";
 
 class Event extends React.Component {
@@ -32,26 +32,6 @@ class Event extends React.Component {
     render() {
         return(
             <div>
-                <BtnInput onClick={() => this.changeState("isActive", !this.state.isActive)}
-                          title={this.state.isActive ? <GoTriangleUp size={16}/> : <GoTriangleDown size={16}/>}
-                          classes={"pt-0 bg-clear border-0 btn-block"}/>
-                <div className={"" + (this.state.isActive ? "" : "collapse")}>
-                    <div className="d-flex">
-                        <BtnInput title={<MdEdit size={20}/>} classes="btn-primary border-0 btn-block"
-                                  onClick={() => this.changeState("isEditing", !this.state.isEditing)}/>
-
-                        <BtnInput title={this.props.complete ? <MdCheckBox size={20}/> : <MdCheckBoxOutlineBlank size={20}/>}
-                                  classes="btn-primary border-0 btn-block m-0" onClick={() => this.props.axiosPathAction(
-                                      `complete/${this.props.id}`, "patch"
-                                  )}/>
-
-                        <BtnInput title={<MdClose size={20}/>} classes="btn-danger border-0 btn-block m-0"
-                                  onClick={() => this.props.axiosPathAction(
-                                      `delete/${this.props.id}`, "delete"
-                                  )}/>
-                    </div>
-                </div>
-
                 <small className='text-muted mr-3'>
                     start: { moment(this.props.startTime, "hh:mm").format("h:mm a") }
                 </small>
@@ -72,6 +52,26 @@ class Event extends React.Component {
                             { this.props.text }
                         </p>
                 }
+
+                <BtnInput onClick={() => this.changeState("isActive", !this.state.isActive)}
+                          title={this.state.isActive ? <FaChevronUp size={16}/> : <FaChevronDown size={16}/>}
+                          classes={"pt-0 bg-clear border-0 btn-block"}/>
+                <div className={"" + (this.state.isActive ? "" : "collapse")}>
+                    <div className="d-flex">
+                        <BtnInput title={<MdEdit size={20}/>} classes="btn-primary border-0 btn-block"
+                                  onClick={() => this.changeState("isEditing", !this.state.isEditing)}/>
+
+                        <BtnInput title={this.props.complete ? <MdCheckBox size={20}/> : <MdCheckBoxOutlineBlank size={20}/>}
+                                  classes="btn-primary border-0 btn-block m-0" onClick={() => this.props.axiosPathAction(
+                            `complete/event/${this.props.id}`, "patch", getUserEvents
+                        )}/>
+
+                        <BtnInput title={<MdClose size={20}/>} classes="btn-danger border-0 btn-block m-0"
+                                  onClick={() => this.props.axiosPathAction(
+                                      `delete/event/${this.props.id}`, "delete", getUserEvents
+                                  )}/>
+                    </div>
+                </div>
             </div>
         )
     }

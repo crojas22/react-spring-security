@@ -98,10 +98,23 @@ body {
 .contact label {
   margin: .50rem; }
 
-.contact h4 {
+.contact-list svg {
+  margin: 0 0.5rem 0.3rem 0; }
+
+h4 {
   margin-top: 8px; }
 
 .list-item {
   display: block;
-  padding: .25rem .75rem;
-  background-color: #f8f9fa; }
+  padding: 0 !important; }
+
+.blb {
+  border-bottom: 1px solid #e7e7e7 !important; }
+
+.rounded-circle {
+  height: 5rem;
+  width: 5rem;
+  color: white;
+  text-align: center;
+  font-size: 3.4rem;
+  background-color: #037aff; }

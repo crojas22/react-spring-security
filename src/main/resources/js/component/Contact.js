@@ -7,6 +7,7 @@ import MdAdd from "react-icons/lib/md/add";
 import MdRemove from "react-icons/lib/md/remove";
 import { BtnInput } from "./reusable/Buttons";
 import ContactForm from "./contact/ContactForm";
+import AlphabeticalList from "./contact/AlphabeticalList";
 
 class Contact extends React.Component {
     state = {
@@ -19,12 +20,21 @@ class Contact extends React.Component {
 
     changeState = (name, target) => this.setState({ [ name ] : target });
 
+    filterByLetter = letter => this.props.contacts.filter(each => each.firstName.slice(0,1).toUpperCase() === letter);
+
     renderAlphabetical = () => {
         const array = [];
         let counter = 65;
         while (counter < 91) {
-            array.push(<li className="list-item">{ String.fromCharCode(counter) }</li>);
-            counter++
+            const contactsByLetter = this.filterByLetter(String.fromCharCode(counter));
+            if (contactsByLetter.length > 0) {
+                array.push(
+                    <AlphabeticalList key={counter} letter={String.fromCharCode(counter)} contacts={contactsByLetter}/>
+                );
+                counter++;
+                continue
+            }
+            counter++;
         }
         return array;
     };
@@ -33,9 +43,9 @@ class Contact extends React.Component {
         let { addingContact } = this.state;
 
         return(
-            <div className="contact container">
+            <div className="container">
                 <div className="row justify-content-center">
-                    <div className="col-sm-8 px-1 py-5">
+                    <div className="contact col-sm-10 col-md-9 col-lg-8 px-1 py-5">
                         <div>
                             <div className="col-auto">
                                 <div className="input-group mb-2">
@@ -45,7 +55,7 @@ class Contact extends React.Component {
                                     <input type="text" id="search" className="form-control" placeholder="Search"/>
                                 </div>
                             </div>
-                            <div>
+                            <div className="mb-2">
                                 <BtnInput title={addingContact ? <MdRemove size={24}/>:<MdAdd size={24}/>}
                                           classes={"btn-outline-" + (addingContact ? "danger":"primary")}
                                           onClick={() => this.changeState("addingContact", !addingContact)}/>
@@ -59,7 +69,7 @@ class Contact extends React.Component {
                                     {
                                         this.renderAlphabetical()
                                     }
-                                </ul>
+                                 </ul>
                             </div>
                         </div>
                     </div>
@@ -71,7 +81,7 @@ class Contact extends React.Component {
 
 const mapStateToProps = state => {
     return {
-
+        contacts: state.userContacts
     }
 };
 

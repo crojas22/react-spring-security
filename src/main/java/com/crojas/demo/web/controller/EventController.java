@@ -38,7 +38,7 @@ public class EventController {
         return new ResponseEntity<>(this.eventService.findUserEvents(user),HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "delete/event/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<List<Event>> removeEvent(@PathVariable Integer id, Principal principal){
         User user = this.userService.findByUsername(principal.getName());
         this.eventService.removeEvent(id);

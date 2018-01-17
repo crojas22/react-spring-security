@@ -89,6 +89,7 @@ export const getUserInfoAction = history => {
                     dispatch(isAuthorized(true));
                     dispatch(getUserInfo(resp.data.user));
                     dispatch(getUserEvents(resp.data.events));
+                    dispatch(getUserContacts(resp.data.contacts))
                 } else {
                     dispatch(isAuthorized(false));
                     dispatch(removeUserInfo());
@@ -116,11 +117,11 @@ export const axiosBodyAction = (body, url, method, func) => {
 };
 
 // Remove , Complete, Edit
-export const axiosPathAction = (url, method) => {
+export const axiosPathAction = (url, method, func) => {
     return (dispatch) => {
         const token = cookie.get('token');
         axiosPathApi(url, method, token).then(resp => {
-            dispatch(getUserEvents(resp.data));
+            dispatch(func(resp.data));
         })
             .catch(error => console.log(error.message))
     }

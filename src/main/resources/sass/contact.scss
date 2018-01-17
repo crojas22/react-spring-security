@@ -2,13 +2,32 @@
   label {
     margin: .50rem;
   }
-  h4 {
-    margin-top: 8px;
+}
+
+.contact-list {
+  svg {
+    margin: 0 0.5rem 0.3rem 0;
   }
+}
+
+h4 {
+  margin-top: 8px;
 }
 
 .list-item {
   display: block;
-  padding: .25rem .75rem;
-  background-color: $bootstrap-grey;
+  padding: 0 !important;
+}
+
+.blb {
+  border-bottom: 1px solid $light-grey !important;
+}
+
+.rounded-circle {
+  height: 5rem;
+  width: 5rem;
+  color: white;
+  text-align: center;
+  font-size: 3.4rem;
+  background-color: #037aff;
 }

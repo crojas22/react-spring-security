@@ -1,7 +1,7 @@
 package com.crojas.demo.web.controller;
 
 import com.crojas.demo.domain.User;
-import com.crojas.demo.domain.UserDto;
+import com.crojas.demo.service.ContactService;
 import com.crojas.demo.service.EventService;
 import com.crojas.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,15 @@ public class AuthenticationController {
 
     private final UserService userService;
     private final EventService eventService;
+    private final ContactService contactService;
 
     @Autowired
-    public AuthenticationController(UserService userService, EventService eventService) {
+    public AuthenticationController(UserService userService,
+                                    EventService eventService,
+                                    ContactService contactService) {
         this.userService = userService;
         this.eventService = eventService;
+        this.contactService = contactService;
     }
 
 
@@ -51,6 +55,7 @@ public class AuthenticationController {
         }
         message.put("user", this.userService.toDto(user));
         message.put("events", this.eventService.findUserEvents(user));
+        message.put("contacts", this.contactService.findUsersContact(user));
 
         return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
     }
