@@ -18,7 +18,8 @@ import EditForm from "./EditForm";
 class IndividualContact extends React.Component {
     state = {
         isActive: false,
-        isEditing: false
+        isEditing: false,
+        placeholder: this.props.name
     };
 
     changeState = (name, target) => this.setState({ [ name ] : target });
@@ -29,7 +30,6 @@ class IndividualContact extends React.Component {
             id: this.props.id,
             [ variable ]: this._edit.value
         }, "edit/contact", "patch", this.props.getUserContacts);
-        console.log(variable)
         this.setState({ isEditing: !this.state.isEditing });
     };
 
@@ -82,7 +82,9 @@ class IndividualContact extends React.Component {
                     {
                         this.state.isEditing ? <EditForm selectOptions={options} {...this.props}
                             inputRef={input => this._edit = input} selectRef={input => this._select = input}
-                            submitHandle={() => this.submitHandle(this._select.value.toLocaleLowerCase(), event)}/>
+                            submitHandle={() => this.submitHandle(this._select.value.toLocaleLowerCase(), event)}
+                            placeHolderHandle={() => this.changeState("placeholder", this.props[this._select.value.toLocaleLowerCase()])}
+                            placeholder={this.state.placeholder}/>
                             : null
                     }
                     <div className="d-flex">
