@@ -32,9 +32,11 @@ public class EventService {
     }
 
     public void editEvent(Event event) {
-        Event event1 = this.eventRepository.findOne(event.getId());
-        event1.setText(event.getText());
-        this.eventRepository.save(event1);
+        Event dbEvent = this.eventRepository.findOne(event.getId());
+        if (event.getText() != null) {
+            dbEvent.setText(event.getText());
+        }
+        this.eventRepository.save(dbEvent);
     }
 
 }

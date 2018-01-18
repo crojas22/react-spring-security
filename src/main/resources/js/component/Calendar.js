@@ -64,7 +64,7 @@ class Calendar extends React.Component {
         return(
             <JustifyContentCenter>
                 <div className="table-responsive-sm">
-                    <table className="calendar table">
+                    <table className="calendar table table-shadow">
                         <thead>
                         <tr className="bg-primary">
                             <th colSpan="7" className="text-center">
@@ -82,7 +82,7 @@ class Calendar extends React.Component {
                             </th>
                         </tr>
                         <tr>
-                            <td colSpan="7" className="border border-white px-0">
+                            <td colSpan="7" className="border border-white pr-0">
                                 <BtnInput title={addingEvent?<MdRemove size={24}/>:<MdAdd size={24}/>}
                                           classes={"btn-outline-" + (addingEvent? "danger":"primary")}
                                           onClick={() => this.changeState("addingEvent", !addingEvent)}/>

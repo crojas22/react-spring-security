@@ -23,7 +23,7 @@ const ContactForm = ({toggleContactForm, axiosBodyAction, getUserContacts, getMe
     };
 
     return(
-        <div className="px-2">
+        <div className="px-2 pb-3">
             <Alert />
             <form className="contact-form w-75" onSubmit={handleSubmit}>
                 <h4>New Contact</h4>

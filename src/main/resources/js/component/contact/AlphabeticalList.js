@@ -3,11 +3,11 @@ import IndividualContact from "./IndividualContact";
 
 const AlphabeticalList = ({letter, contacts}) => {
 
-    const renderContacts = contacts.map(each => <li key={each.id} className="list-item bg-white"><IndividualContact {...each}/></li>);
+    const renderContacts = contacts.map(each => <li key={each.id} className="list-item bg-white shadow"><IndividualContact {...each}/></li>);
 
     return(
         <li className="list-item bg-white contact-list">
-            <div className="bg-warning pl-1 text-white">
+            <div className="bg-light-blue px-2 text-white">
                 {
                     letter
                 }

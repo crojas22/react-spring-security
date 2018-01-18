@@ -24,7 +24,7 @@ class IndividualContact extends React.Component {
 
     changeState = (name, target) => this.setState({ [ name ] : target });
 
-    submitHandle = (variable, e) => {
+    handleSubmit = (variable, e) => {
         e.preventDefault();
         this.props.axiosBodyAction({
             id: this.props.id,
@@ -38,7 +38,7 @@ class IndividualContact extends React.Component {
 
         return(
             <div>
-                <div className="pt-3">
+                <div className="pt-3 px-2">
                     {
                         this.props.favorite ? <MdStar size={28} color={"gold"}/> : <MdAccountCircle size={28}/>
                     }
@@ -49,9 +49,9 @@ class IndividualContact extends React.Component {
                     </p>
                     <BtnInput onClick={() => this.changeState("isActive", !this.state.isActive)}
                               title={this.state.isActive ? <FaChevronUp size={16}/> : <FaChevronDown size={16}/>}
-                              classes={"pt-0 bg-clear border-0 btn-block blb"}/>
+                              classes={"pt-0 bg-clear border-0 btn-block"}/>
                 </div>
-                <div className={"" + (this.state.isActive ? "bg-light py-3" : "collapse")}>
+                <div className={"" + (this.state.isActive ? "bg-light pt-3" : "collapse")}>
                     <div>
                         <div className="rounded-circle mx-auto">
                             {
@@ -80,9 +80,10 @@ class IndividualContact extends React.Component {
                         </div>
                     </div>
                     {
-                        this.state.isEditing ? <EditForm selectOptions={options} {...this.props}
+                        this.state.isEditing ?
+                            <EditForm selectOptions={options}
                             inputRef={input => this._edit = input} selectRef={input => this._select = input}
-                            submitHandle={() => this.submitHandle(this._select.value.toLocaleLowerCase(), event)}
+                            submitHandle={() => this.handleSubmit(this._select.value.toLocaleLowerCase(), event)}
                             placeHolderHandle={() => this.changeState("placeholder", this.props[this._select.value.toLocaleLowerCase()])}
                             placeholder={this.state.placeholder}/>
                             : null

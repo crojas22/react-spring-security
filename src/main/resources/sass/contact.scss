@@ -1,4 +1,5 @@
 .contact {
+  max-width: 630px !important;
   label {
     margin: .50rem;
   }
@@ -23,10 +24,6 @@ h4 {
   padding: 0 !important;
 }
 
-.blb {
-  border-bottom: 1px solid $light-grey !important;
-}
-
 .rounded-circle {
   height: 5rem;
   width: 5rem;
@@ -34,4 +31,17 @@ h4 {
   text-align: center;
   font-size: 3.4rem;
   background-color: #037aff;
+}
+
+.shadow {
+  border: 1px solid #f7f4f4;
+  border-bottom: 0;
+  &:hover {
+    box-shadow: 0 10px 5px -7px rgba(0, 0, 0, 0.5) !important;
+    transform: scale(1.01);
+  }
+}
+
+.bg-light-blue {
+  background-color: #badafb;
 }

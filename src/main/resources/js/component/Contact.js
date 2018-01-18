@@ -46,16 +46,13 @@ class Contact extends React.Component {
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="contact col-sm-10 col-md-9 col-lg-8 px-1 py-5">
-                        <div>
-                            <div className="col-auto">
-                                <div className="input-group mb-2">
-                                    <div className="input-group-prepend">
-                                        <label htmlFor="search" className="input-group-text">@</label>
-                                    </div>
-                                    <input type="text" id="search" className="form-control" placeholder="Search"/>
-                                </div>
+                        <div className="table-shadow">
+                            <div className="col-auto bg-primary px-0">
+                                <h1 className="text-center m-0 py-5 text-white">
+                                    Contacts
+                                </h1>
                             </div>
-                            <div className="mb-2">
+                            <div className="py-3 px-2">
                                 <BtnInput title={addingContact ? <MdRemove size={24}/>:<MdAdd size={24}/>}
                                           classes={"btn-outline-" + (addingContact ? "danger":"primary")}
                                           onClick={() => this.changeState("addingContact", !addingContact)}/>
@@ -65,7 +62,7 @@ class Contact extends React.Component {
                                     toggleContactForm={() => this.changeState("addingContact", !addingContact)}/> : null
                             }
                             <div>
-                                <ul className="list-group py-3">
+                                <ul className="list-group">
                                     {
                                         this.renderAlphabetical()
                                     }
