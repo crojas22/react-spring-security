@@ -5,13 +5,18 @@ import { bindActionCreators } from "redux";
 import { withRouter } from "react-router-dom";
 import MdAdd from "react-icons/lib/md/add";
 import MdRemove from "react-icons/lib/md/remove";
+import MdSearch from "react-icons/lib/md/search";
+import MdZoomOut from "react-icons/lib/md/zoom-out";
+import MdStar from "react-icons/lib/md/star";
+import MdStarOutline from "react-icons/lib/md/star-outline";
 import { BtnInput } from "./reusable/Buttons";
 import ContactForm from "./contact/ContactForm";
 import AlphabeticalList from "./contact/AlphabeticalList";
 
 class Contact extends React.Component {
     state = {
-        addingContact: false
+        addingContact: false,
+        showingFavorite: false
     };
 
     componentWillMount() {
@@ -20,13 +25,13 @@ class Contact extends React.Component {
 
     changeState = (name, target) => this.setState({ [ name ] : target });
 
-    filterByLetter = letter => this.props.contacts.filter(each => each.name.slice(0,1).toUpperCase() === letter);
+    filterByLetter = (array, letter) => array.filter(each => each.name.slice(0,1).toUpperCase() === letter);
 
-    renderAlphabetical = () => {
+    renderAlphabetical = arrayVariable => {
         const array = [];
         let counter = 65;
         while (counter < 91) {
-            const contactsByLetter = this.filterByLetter(String.fromCharCode(counter));
+            const contactsByLetter = this.filterByLetter(arrayVariable , String.fromCharCode(counter));
             if (contactsByLetter.length > 0) {
                 array.push(
                     <AlphabeticalList key={counter} letter={String.fromCharCode(counter)} contacts={contactsByLetter}/>
@@ -40,7 +45,9 @@ class Contact extends React.Component {
     };
 
     render() {
-        let { addingContact } = this.state;
+        let { addingContact, showingFavorite } = this.state;
+
+        const onlyFavoriteArray = this.props.contacts.filter(each => each.favorite);
 
         return(
             <div className="container">
@@ -48,7 +55,7 @@ class Contact extends React.Component {
                     <div className="contact col-sm-10 col-md-9 col-lg-8 px-1 py-5">
                         <div className="table-shadow">
                             <div className="col-auto bg-primary px-0">
-                                <h1 className="text-center m-0 py-5 text-white">
+                                <h1 className="text-center m-0 py-4 text-white">
                                     Contacts
                                 </h1>
                             </div>
@@ -56,6 +63,10 @@ class Contact extends React.Component {
                                 <BtnInput title={addingContact ? <MdRemove size={24}/>:<MdAdd size={24}/>}
                                           classes={"btn-outline-" + (addingContact ? "danger":"primary")}
                                           onClick={() => this.changeState("addingContact", !addingContact)}/>
+
+                                <BtnInput title={showingFavorite ? <MdStar size={24}/> : <MdStarOutline size={24}/>}
+                                          classes={"mx-2 btn-outline-" + (showingFavorite ? "danger":"primary")}
+                                          onClick={() => this.changeState("showingFavorite", !showingFavorite)}/>
                             </div>
                             {
                                 addingContact ? <ContactForm
@@ -63,8 +74,10 @@ class Contact extends React.Component {
                             }
                             <div>
                                 <ul className="list-group">
+                                    {/* Will pass different array to function depending on state */}
                                     {
-                                        this.renderAlphabetical()
+                                        this.state.showingFavorite ? this.renderAlphabetical(onlyFavoriteArray)
+                                            : this.renderAlphabetical(this.props.contacts)
                                     }
                                  </ul>
                             </div>

@@ -26,7 +26,7 @@ const ContactForm = ({toggleContactForm, axiosBodyAction, getUserContacts, getMe
         <div className="px-2 pb-3">
             <Alert />
             <form className="contact-form w-75" onSubmit={handleSubmit}>
-                <h4>New Contact</h4>
+                <h4 className="mt-0">New Contact</h4>
                 <div className="form-row">
                     <div className="form-group col-md-8">
                         <input type="text" id="name" ref={input => _name = input}
