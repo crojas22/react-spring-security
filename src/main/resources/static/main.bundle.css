@@ -96,7 +96,8 @@ body {
     flex-direction: column; }
     .homepage div h1 {
       color: white;
-      margin-bottom: 1rem; }
+      margin-bottom: 1rem;
+      text-align: center; }
 
 .bg-transparent {
   background: transparent; }
