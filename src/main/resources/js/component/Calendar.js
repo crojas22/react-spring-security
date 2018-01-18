@@ -13,6 +13,7 @@ import Week from "./calendar/Week";
 import EventsForm from "./calendar/EventsForm";
 import EventList from "./calendar/EventList";
 import DataBar from "./calendar/DataBar";
+import { SelectOptions } from "./reusable/SelectOptions";
 
 class Calendar extends React.Component {
     state = {
@@ -20,6 +21,7 @@ class Calendar extends React.Component {
         select: moment(),
         addingEvent: false,
         showEvents: false,
+        selectValue: ""
     };
 
     componentWillMount() {
@@ -32,6 +34,18 @@ class Calendar extends React.Component {
 
     // General function to change state
     changeState = (name, target) => this.setState({ [ name ] : target });
+
+    // Function will return an array, 1 of 3 options
+    renderEvents = array => {
+        return this.state.selectValue === "completed" ? array.filter(each => each.complete) :
+            this.state.selectValue === "incomplete" ? array.filter(each => !each.complete) : array;
+    };
+
+    // Necessary so selectValue can reset value when not rendering
+    onClick = () => {
+        this.changeState("showEvents", !this.state.showEvents);
+        this.changeState("selectValue", "");
+    };
 
     renderWeeks = () => {
         let weeks = [],
@@ -61,53 +75,68 @@ class Calendar extends React.Component {
         // Will return filtered array with only events of selected date
         const eventsPerDay = this.props.userEvents.filter(each => each.date === select._d.toString().slice(4,15));
 
+        const selectOptions = ["All", "Completed", "Incomplete"];
+
         return(
             <JustifyContentCenter>
                 <div className="table-responsive-sm">
                     <table className="calendar table table-shadow">
                         <thead>
-                        <tr className="bg-primary">
-                            <th colSpan="7" className="text-center">
-                                {/* back a month */}
-                                <BtnInput title="<" onClick={() => this.changeState("month", month.add(-1, "month"))}
-                                          classes="btn-outline-primary float-left text-white arrow"/>
+                            <tr className="bg-primary">
+                                <th colSpan="7" className="text-center">
+                                    {/* back a month */}
+                                    <BtnInput title="<" onClick={() => this.changeState("month", month.add(-1, "month"))}
+                                              classes="btn-outline-primary float-left text-white arrow"/>
 
-                                {
-                                    this.renderLabel("MMMM, YYYY", month)
-                                }
+                                    {
+                                        this.renderLabel("MMMM, YYYY", month)
+                                    }
 
-                                {/* forward a month */}
-                                <BtnInput title=">" onClick={() => this.changeState("month", month.add(1, "month"))}
-                                          classes="btn-outline-primary float-right text-white arrow"/>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td colSpan="7" className="border border-white pr-0">
-                                <BtnInput title={addingEvent?<MdRemove size={24}/>:<MdAdd size={24}/>}
-                                          classes={"btn-outline-" + (addingEvent? "danger":"primary")}
-                                          onClick={() => this.changeState("addingEvent", !addingEvent)}/>
+                                    {/* forward a month */}
+                                    <BtnInput title=">" onClick={() => this.changeState("month", month.add(1, "month"))}
+                                              classes="btn-outline-primary float-right text-white arrow"/>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td colSpan="7" className="border border-white pr-0">
+                                    <BtnInput title={addingEvent?<MdRemove size={24}/>:<MdAdd size={24}/>}
+                                              classes={"btn-outline-" + (addingEvent? "danger":"primary")}
+                                              onClick={() => this.changeState("addingEvent", !addingEvent)}/>
 
-                                <BtnInput title={showEvents?<MdRemove size={24}/>:<MdFormatListNumbered size={24}/>}
-                                          classes={"mx-2 btn-outline-" + (showEvents? "danger":"primary")}
-                                          onClick={() => this.changeState("showEvents", !showEvents)}/>
+                                    <BtnInput title={showEvents?<MdRemove size={24}/>:<MdFormatListNumbered size={24}/>}
+                                              classes={"mx-2 btn-outline-" + (showEvents? "danger":"primary")}
+                                              onClick={this.onClick}/>
 
-                                {/* Bar with total events / completed events */}
-                                <DataBar events={ this.props.userEvents } month={ this.state.month }/>
-                            </td>
-                        </tr>
-                        {
-                            addingEvent ? <EventsForm addingEventToggle={() => this.changeState("addingEvent", !addingEvent)}
-                                                      selected={select} events={eventsPerDay}/> : null
-                        }
-
-                        {
-                            showEvents ? <EventList events={ eventsPerDay } selected={select}/> : null
-                        }
-                        <tr>
+                                    {/* Bar with total events / completed events */}
+                                    <DataBar events={ this.props.userEvents } month={ this.state.month }/>
+                                </td>
+                            </tr>
                             {
-                                this.renderDaysOfWeek(month._locale._weekdays)
+                                addingEvent ? <EventsForm addingEventToggle={() => this.changeState("addingEvent", !addingEvent)}
+                                                          selected={select} events={eventsPerDay}/> : null
                             }
-                        </tr>
+
+                            {
+                                showEvents ?
+                                    <tr>
+                                        <td colSpan="7">
+                                            <SelectOptions options={selectOptions}
+                                                           selectOnChange={() => this.changeState(
+                                                               "selectValue", this._select.value.toLowerCase()
+                                                           )}
+                                                           selectRefVal={input => this._select = input}/>
+                                        </td>
+                                    </tr> : null
+                            }
+
+                            {
+                                showEvents ? <EventList events={ this.renderEvents(eventsPerDay) } selected={select}/> : null
+                            }
+                            <tr>
+                                {
+                                    this.renderDaysOfWeek(month._locale._weekdays)
+                                }
+                            </tr>
                         </thead>
                         <tbody>
                         {
