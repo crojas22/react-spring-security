@@ -33,6 +33,13 @@ class IndividualContact extends React.Component {
         this.setState({ isEditing: !this.state.isEditing });
     };
 
+    // Necessary so selectValue can reset value when not rendering
+    onClick = () => {
+        this.changeState("isEditing", !this.state.isEditing);
+        // Will reset to default value
+        this.changeState("placeholder", this.props.name);
+    };
+
     render() {
         const options = ["Name", "Phone", "Email", "Company"];
 
@@ -91,7 +98,7 @@ class IndividualContact extends React.Component {
                     <div className="d-flex">
                         <BtnInput title={this.state.isEditing ? "Cancel" : <MdEdit size={20}/>}
                                   classes="border-0 btn-block btn-primary"
-                                  onClick={() => this.changeState("isEditing", !this.state.isEditing)}/>
+                                  onClick={this.onClick}/>
 
                         <BtnInput title={this.props.favorite ? <MdStar size={20}/> : <MdStarOutline size={20}/>}
                                   classes="btn-primary border-0 btn-block m-0" onClick={() => this.props.axiosPathAction(
