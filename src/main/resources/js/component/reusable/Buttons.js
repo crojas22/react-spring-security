@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 
-export const BtnInput = ({title, classes, onClick, type}) => (
-    <button type={type} className={'btn rounded-0 ' + classes} onClick={onClick}>
+export const BtnInput = ({title, classes, onClick, type, disabled}) => (
+    <button type={type} className={'btn rounded-0 ' + classes} onClick={onClick} disabled={disabled}>
         {
             title
         }
@@ -10,7 +10,8 @@ export const BtnInput = ({title, classes, onClick, type}) => (
 );
 
 BtnInput.defaultProps = {
-    type: 'button'
+    type: 'button',
+    disabled: false
 };
 
 export const BtnSubmit = ({title, classes}) => (
