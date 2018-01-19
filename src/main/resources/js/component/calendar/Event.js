@@ -64,11 +64,11 @@ class Event extends React.Component {
 
                     <div className="d-flex">
                         <BtnInput title={this.state.isEditing ? "Cancel" : <MdEdit size={20}/>}
-                                  classes="btn-primary border-0 btn-block"
+                                  classes="btn-secondary border-0 btn-block"
                                   onClick={() => this.changeState("isEditing", !this.state.isEditing)}/>
 
                         <BtnInput title={this.props.complete ? <MdCheckBox size={20}/> : <MdCheckBoxOutlineBlank size={20}/>}
-                                  classes="btn-primary border-0 btn-block m-0" onClick={() => this.props.axiosPathAction(
+                                  classes="btn-secondary border-0 btn-block m-0" onClick={() => this.props.axiosPathAction(
                             `complete/event/${this.props.id}`, "patch", getUserEvents
                         )}/>
 

@@ -97,11 +97,11 @@ class IndividualContact extends React.Component {
                     }
                     <div className="d-flex">
                         <BtnInput title={this.state.isEditing ? "Cancel" : <MdEdit size={20}/>}
-                                  classes="border-0 btn-block btn-primary"
+                                  classes="border-0 btn-block btn-secondary"
                                   onClick={this.onClick}/>
 
                         <BtnInput title={this.props.favorite ? <MdStar size={20}/> : <MdStarOutline size={20}/>}
-                                  classes="btn-primary border-0 btn-block m-0" onClick={() => this.props.axiosPathAction(
+                                  classes="btn-secondary border-0 btn-block m-0" onClick={() => this.props.axiosPathAction(
                             `favorite/${this.props.id}`, "patch", getUserContacts
                         )}/>
 
