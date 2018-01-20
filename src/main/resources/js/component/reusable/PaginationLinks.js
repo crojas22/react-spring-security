@@ -25,14 +25,14 @@ const PaginationLinks = ({perPage, pageNumber, arrayLength, changePage}) => {
             <ul className="pagination">
                 <li>
                     <BtnInput title="<<" onClick={e => changePage(e.target.innerHTML, totalPages)}
-                              classes="btn-outline-primary" disabled={pageNumber === 1}/>
+                              classes="btn-outline-primary" />
                 </li>
                 {
                     renderLinks()
                 }
                 <li>
                     <BtnInput title=">>" onClick={e => changePage(e.target.innerHTML, totalPages)}
-                              classes="btn-outline-primary" disabled={pageNumber === totalPages}/>
+                              classes="btn-outline-primary"/>
                 </li>
             </ul>
         </nav>
