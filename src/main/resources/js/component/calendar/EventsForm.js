@@ -51,7 +51,7 @@ const EventsForm = ({addingEventToggle, selected, axiosBodyAction, events, getMe
                     <h4>New Event</h4>
                     <div>
                         <div className="py-2">
-                            For: { selected.format("LLLL").slice(0, -9) }
+                            For: { selected.format("LLLL").slice(0, -8) }
                         </div>
                         <div className="form-group mb-0">
                             <label htmlFor="from">Start time</label>

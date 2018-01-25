@@ -1,5 +1,5 @@
 .contact {
-  max-width: 630px !important;
+  max-width: 530px !important;
   label {
     margin: .50rem;
   }
@@ -40,6 +40,11 @@ h4 {
     box-shadow: 0 10px 5px -7px rgba(0, 0, 0, 0.5) !important;
     transform: scale(1.01);
   }
+}
+
+.truncate {
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .bg-light-blue {

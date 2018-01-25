@@ -65,7 +65,7 @@ class IndividualContact extends React.Component {
                                 this.props.name.slice(0,1).toUpperCase()
                             }
                         </div>
-                        <div className="d-flex flex-wrap flex-lg-nowrap my-4">
+                        <div className="d-flex flex-wrap flex-xl-nowrap my-4">
                             <div className="btn-block text-center py-1">
                                 <MdBusiness size={24}/>
                                 {
@@ -78,7 +78,7 @@ class IndividualContact extends React.Component {
                                     this.props.phone
                                 }
                             </div>
-                            <div className="btn-block text-center m-0 py-1 flex-">
+                            <div className="btn-block text-center m-0 py-1 truncate">
                                 <FaEnvelope size={24}/>
                                 {
                                     this.props.email
