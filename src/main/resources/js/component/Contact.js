@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 import { withRouter } from "react-router-dom";
 import MdAdd from "react-icons/lib/md/add";
 import MdRemove from "react-icons/lib/md/remove";
+import MdSortByAlpha from "react-icons/lib/md/sort-by-alpha";
 import MdStar from "react-icons/lib/md/star";
 import MdStarOutline from "react-icons/lib/md/star-outline";
 import { BtnInput } from "./reusable/Buttons";
@@ -17,6 +18,8 @@ class Contact extends React.Component {
     state = {
         addingContact: false,
         showingFavorite: false,
+        filteringAlpha: false,
+        selectedLetter: "",
         perPage: 4,
         pageNumber: 1
     };
@@ -25,44 +28,45 @@ class Contact extends React.Component {
         this.props.getUserInfoAction(this.props.history);
     }
 
-    changeState = (name, target) => this.setState({ [ name ] : target });
-
     changePageNumber = (value, totalLinks) => {
         if (!isNaN(value)) {
-            this.changeState("pageNumber", parseInt(value));
+            this.setState({pageNumber: parseInt(value)});
         } else if (value === "&lt;&lt;" && this.state.pageNumber > 1) {
-            this.changeState("pageNumber", this.state.pageNumber - 1)
+            this.setState({pageNumber: this.state.pageNumber - 1})
         } else if (value === "&gt;&gt;" && this.state.pageNumber < totalLinks) {
-            this.changeState("pageNumber", this.state.pageNumber + 1)
+            this.setState({pageNumber: this.state.pageNumber + 1})
         }
     };
 
     filterByLetter = (array, letter) => array.filter(each => each.name.slice(0,1).toUpperCase() === letter);
 
     renderAlphabetical = (pageNumber, arrayVariable, perPage) => {
-        let array = [],
+        let contacts = [],
             i = 65,
             max = pageNumber * perPage,
-            min = max - perPage;
-        const sliced = arrayVariable.length < perPage ? arrayVariable : arrayVariable.slice(min, max);
+            min = max - perPage,
+            sliced = arrayVariable.length < perPage ? arrayVariable : arrayVariable.slice(min, max);
 
         for (i; i < 91; i++) {
-            const contactsByLetter = this.filterByLetter(sliced , String.fromCharCode(i));
-            if (contactsByLetter.length > 0) {
-                array.push(
+            const contactsByLetter = this.filterByLetter(sliced, String.fromCharCode(i));
+
+            if(contactsByLetter.length > 0) {
+                contacts.push(
                     <AlphabeticalList key={i} letter={String.fromCharCode(i)} contacts={contactsByLetter}/>
                 );
             }
         }
-        return array;
+        return contacts;
     };
 
     render() {
-        let { addingContact, showingFavorite } = this.state;
+        let { addingContact, showingFavorite, filteringAlpha, pageNumber, perPage, selectedLetter } = this.state;
 
-        const onlyFavoriteArray = this.props.contacts.filter(each => each.favorite);
-
-        const pagesPerPage = [4, 8, 12];
+        const onlyFavoriteArray = this.props.contacts.filter(each => each.favorite),
+            // Will return all contacts grouped by letters, useful for getting letters that have a contact
+            contactsFilteredByLetter = this.renderAlphabetical(1, this.props.contacts, this.props.contacts.length),
+            // Will return array with only contacts that start with selectedLetter
+            byLetter = contactsFilteredByLetter.filter(each => each.props.letter === selectedLetter);
 
         return(
             <div className="container">
@@ -77,28 +81,49 @@ class Contact extends React.Component {
                             <div className="py-3 px-2">
                                 <BtnInput title={addingContact ? <MdRemove size={24}/>:<MdAdd size={24}/>}
                                           classes={"btn-outline-" + (addingContact ? "danger":"primary")}
-                                          onClick={() => this.changeState("addingContact", !addingContact)}/>
+                                          onClick={() => this.setState({addingContact: !addingContact})}/>
 
                                 <BtnInput title={showingFavorite ? <MdStar size={24}/> : <MdStarOutline size={24}/>}
                                           classes={"mx-2 btn-outline-" + (showingFavorite ? "danger":"primary")}
-                                          onClick={() => this.changeState("showingFavorite", !showingFavorite)}/>
+                                          onClick={() => this.setState({
+                                              showingFavorite: !showingFavorite,
+                                              pageNumber: 1
+                                          })}/>
+
+                                <BtnInput title={<MdSortByAlpha size={24}/>}
+                                          classes={"btn-outline-" + (filteringAlpha ? "danger":"primary")}
+                                          onClick={() => this.setState({
+                                              filteringAlpha: !filteringAlpha,
+                                              selectedLetter: "A"
+                                          })}/>
 
                                 <div className="float-right d-inline">
-                                    <SelectOptions options={pagesPerPage} selectRefVal={input => this._select = input}
-                                                   selectOnChange={() => this.changeState("perPage", parseInt(this._select.value))}/>
+                                    {
+                                        filteringAlpha ?
+                                            <SelectOptions options={contactsFilteredByLetter.map((each) => each.props.letter)}
+                                                           selectRefVal={input => this._letter = input}
+                                                           selectOnChange={() => this.setState({selectedLetter: this._letter.value})}/>
+                                            : null
+                                    }
+                                    <SelectOptions options={[4,8,12]} selectRefVal={input => this._select = input}
+                                                   selectOnChange={() => this.setState({
+                                                       perPage: parseInt(this._select.value),
+                                                       pageNumber: 1
+                                                   })}/>
                                 </div>
                             </div>
                             {
                                 addingContact ? <ContactForm
-                                    toggleContactForm={() => this.changeState("addingContact", !addingContact)}/> : null
+                                    toggleContactForm={() => this.setState({addingContact: !addingContact})}/> : null
                             }
                             <div>
                                 <ul className="list-group">
-                                    {/* Will pass different array to function depending on state */}
+                                    {/* Will pass different array to function depending on state, 3 options available */}
                                     {
-                                        this.state.showingFavorite ?
-                                            this.renderAlphabetical(this.state.pageNumber, onlyFavoriteArray, this.state.perPage)
-                                            : this.renderAlphabetical(this.state.pageNumber, this.props.contacts, this.state.perPage)
+                                        showingFavorite ? this.renderAlphabetical(pageNumber, onlyFavoriteArray, perPage) :
+                                            filteringAlpha ? byLetter :
+                                                this.renderAlphabetical(pageNumber, this.props.contacts, perPage)
+
                                     }
                                  </ul>
                             </div>
@@ -106,10 +131,13 @@ class Contact extends React.Component {
                     </div>
                 </div>
                 <div className="row justify-content-center">
-                    {/* Will pass the length of all contacts or just favorites */}
-                    <PaginationLinks perPage={this.state.perPage} pageNumber={this.state.pageNumber}
-                                     arrayLength={this.state.showingFavorite ? onlyFavoriteArray.length
-                                         : this.props.contacts.length} changePage={this.changePageNumber}/>
+                    {/* Will pass the length of contacts based on current array being rendered, 3 options availle */}
+                    <PaginationLinks perPage={perPage} pageNumber={pageNumber}
+                                     arrayLength={
+                                         showingFavorite ? onlyFavoriteArray.length :
+                                             filteringAlpha ? byLetter.length :
+                                                 this.props.contacts.length
+                                     } changePage={this.changePageNumber}/>
                 </div>
             </div>
         )

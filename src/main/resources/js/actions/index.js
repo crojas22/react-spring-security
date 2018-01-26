@@ -96,7 +96,7 @@ export const getUserInfoAction = history => {
                     history.push("/login");
                 }
             })
-                .catch(error => history.push("/login"))
+                .catch(error => console.log(error))
         } else {
             history.push("/login")
         }

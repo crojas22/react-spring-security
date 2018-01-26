@@ -14,6 +14,7 @@ import EventsForm from "./calendar/EventsForm";
 import EventList from "./calendar/EventList";
 import DataBar from "./calendar/DataBar";
 import { SelectOptions } from "./reusable/SelectOptions";
+import Alert from "./reusable/Alert";
 
 class Calendar extends React.Component {
     state = {

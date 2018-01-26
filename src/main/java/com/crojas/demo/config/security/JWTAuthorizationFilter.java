@@ -1,5 +1,6 @@
 package com.crojas.demo.config.security;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,11 +32,14 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
             return;
         }
+        try {
+            UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
 
-        UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
-
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        chain.doFilter(request, response);
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            chain.doFilter(request, response);
+        } catch (ExpiredJwtException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
