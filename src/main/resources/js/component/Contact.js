@@ -74,7 +74,7 @@ class Contact extends React.Component {
                     <div className="contact col-sm-10 col-md-9 col-lg-8 px-1 pt-5 pb-3">
                         <div className="table-shadow">
                             <div className="col-auto bg-primary px-0">
-                                <h1 className="text-center m-0 py-4 text-white">
+                                <h1 className="text-center m-0 py-4 text-white font-weight-light">
                                     Contacts
                                 </h1>
                             </div>
@@ -85,15 +85,16 @@ class Contact extends React.Component {
 
                                 <BtnInput title={showingFavorite ? <MdStar size={24}/> : <MdStarOutline size={24}/>}
                                           classes={"mx-2 btn-outline-" + (showingFavorite ? "danger":"primary")}
-                                          onClick={() => this.setState({
+                                          disabled={filteringAlpha} onClick={() => this.setState({
                                               showingFavorite: !showingFavorite,
                                               pageNumber: 1
                                           })}/>
 
                                 <BtnInput title={<MdSortByAlpha size={24}/>}
                                           classes={"btn-outline-" + (filteringAlpha ? "danger":"primary")}
-                                          onClick={() => this.setState({
+                                          disabled={showingFavorite} onClick={() => this.setState({
                                               filteringAlpha: !filteringAlpha,
+                                              pageNumber: 1,
                                               selectedLetter: "A"
                                           })}/>
 

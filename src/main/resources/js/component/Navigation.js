@@ -10,7 +10,6 @@ import {getUserInfoAction, loginAction, logoutAction} from "../actions";
 import Logout from "./navbar/Logout";
 
 class Navigation extends Component {
-
     state = {
         showNavBar : false,
         showLogInForm: false,
@@ -21,8 +20,6 @@ class Navigation extends Component {
         this.props.getUserInfoAction(this.props.history);
     }
 
-    changeState = (name, target) => this.setState({ [ name ] : !target });
-
     logOutUser = history => this.props.logoutAction(history);
 
     logInUser = (user, history) => this.props.loginAction(user, history);
@@ -30,7 +27,6 @@ class Navigation extends Component {
     render() {
         const {history, userInfo, auth, location} = this.props;
         return(
-
             // Will toggle between transparent depending on url
             <nav className={"navbar navbar-expand-md " + (location.pathname !== "/" ? "bg-light navbar-light" :
                 location.pathname === "/" && this.state.isDown ? "fixed-top bg-light navbar-light"
@@ -39,7 +35,7 @@ class Navigation extends Component {
                 <NavLink className="navbar-brand" exact to="/"><MdHome size={28}/></NavLink>
 
                 <button className="navbar-toggler border-0" type="button"
-                        onClick={() => this.changeState("showNavBar", this.state.showNavBar)}>
+                        onClick={() => this.setState({showNavBar: !this.state.showNavBar})}>
 
                     <span className="navbar-toggler-icon"/>
                 </button>
@@ -71,11 +67,10 @@ class Navigation extends Component {
                         // If authorized will give option to log out, else will be able to sign in using form
                         auth ? <Logout logOut={() => this.logOutUser(history)} userInfo={userInfo}/> :
                             this.state.showLogInForm ?
-
-                                <LogInForm toggleShowLogInForm={() => this.changeState("showLogInForm", this.state.showLogInForm)}
+                                <LogInForm toggleShowLogInForm={() => this.setState({showLogInForm: !this.state.showLogInForm})}
                                            logInUser={ this.logInUser } history={history}/>
                                 :
-                                <BtnInput onClick={() => this.changeState("showLogInForm", this.state.showLogInForm)}
+                                <BtnInput onClick={() => this.setState({showLogInForm: !this.state.showLogInForm})}
                                           title="Log in" classes="btn-primary "/>
                     }
                 </div>
