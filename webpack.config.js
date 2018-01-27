@@ -1,4 +1,7 @@
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
+
+const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
 module.exports = {
     entry: {
@@ -24,6 +27,26 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+                comparisons: false,
+            },
+            mangle: {
+                safari10: true,
+            },
+            output: {
+                comments: false,
+                ascii_only: true,
+            },
+            sourceMap: shouldUseSourceMap,
+        }),
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new ExtractTextPlugin({
             filename: '[name].bundle.css',
             allChunks: true,
