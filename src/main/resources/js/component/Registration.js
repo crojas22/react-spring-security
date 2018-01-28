@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { JustifyContentCenter, FormRowCol } from "./reusable/DivReusables";
 import { BtnSubmit } from "./reusable/Buttons";
 import { registerAction } from "../actions";
+import Alert from "./reusable/Alert";
 
 const Registration = ({registerAction, history}) => {
 
@@ -25,6 +26,7 @@ const Registration = ({registerAction, history}) => {
         <JustifyContentCenter>
             <form className="registration" onSubmit={ handleSubmit }>
                 <h4>Register</h4>
+                <Alert />
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <input type="text" id="firstName" ref={input => _firstName = input}

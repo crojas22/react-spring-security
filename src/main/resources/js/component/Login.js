@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { JustifyContentCenter, FormRowCol } from "./reusable/DivReusables";
 import { BtnSubmit } from "./reusable/Buttons";
 import { loginAction } from "../actions";
+import Alert from "./reusable/Alert";
 
 const Login = ({loginAction, history}) => {
     let _email, _password;
@@ -22,7 +23,7 @@ const Login = ({loginAction, history}) => {
         <JustifyContentCenter>
             <form className="login" onSubmit={ handleSubmit }>
                 <h4>Login</h4>
-
+                <Alert />
                 <FormRowCol>
                     <input type="text" name="email" ref={input => _email = input}
                            className="form-control" placeholder="Email" required/>

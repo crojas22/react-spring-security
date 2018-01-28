@@ -2,6 +2,7 @@ import Cookies from 'universal-cookie';
 import {
     loginApi, registerApi, getUserInfoApi, axiosBodyApi, axiosPathApi
 } from "../api";
+import { getMessageAction } from "./alert";
 
 const cookie = new Cookies();
 
@@ -54,7 +55,7 @@ export const registerAction = (newUser, history) => {
                 history.push('/login');
             }
         })
-            .catch(error => console.log(error.response))
+            .catch(error => dispatch(getMessageAction(error.response.data.errorMessage, true, "danger")))
     }
 };
 
@@ -67,7 +68,7 @@ export const loginAction = (user, history) => {
                 history.push("/calendar");
             }
         })
-            .catch(error => console.log(error.response))
+            .catch(error => dispatch(getMessageAction(error.response.data.message, true, "danger")))
     }
 };
 
